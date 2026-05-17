@@ -1,0 +1,970 @@
+{
+    "nodo_pai": "programa",
+    "producao_acionada": "comando_lista",
+    "nodos_filhos": [
+        {
+            "nodo_pai": "comando_lista",
+            "producao_acionada": "comando comando_lista",
+            "nodos_filhos": [
+                {
+                    "nodo_pai": "comando",
+                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                    "nodos_filhos": [
+                        {
+                            "terminal_folha": "ABRE_PAREN",
+                            "valor_extraido": "("
+                        },
+                        {
+                            "nodo_pai": "conteudo_comando",
+                            "producao_acionada": "KEYWORD_START",
+                            "nodos_filhos": [
+                                {
+                                    "terminal_folha": "KEYWORD_START",
+                                    "valor_extraido": "START"
+                                }
+                            ]
+                        },
+                        {
+                            "terminal_folha": "FECHA_PAREN",
+                            "valor_extraido": ")"
+                        }
+                    ]
+                },
+                {
+                    "nodo_pai": "comando_lista",
+                    "producao_acionada": "comando comando_lista",
+                    "nodos_filhos": [
+                        {
+                            "nodo_pai": "comando",
+                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                            "nodos_filhos": [
+                                {
+                                    "terminal_folha": "ABRE_PAREN",
+                                    "valor_extraido": "("
+                                },
+                                {
+                                    "nodo_pai": "conteudo_comando",
+                                    "producao_acionada": "NUMERO sufixo_numero",
+                                    "nodos_filhos": [
+                                        {
+                                            "terminal_folha": "NUMERO",
+                                            "valor_extraido": "3.14"
+                                        },
+                                        {
+                                            "nodo_pai": "sufixo_numero",
+                                            "producao_acionada": "NUMERO operador_final",
+                                            "nodos_filhos": [
+                                                {
+                                                    "terminal_folha": "NUMERO",
+                                                    "valor_extraido": "2.0"
+                                                },
+                                                {
+                                                    "nodo_pai": "operador_final",
+                                                    "producao_acionada": "OPERADOR",
+                                                    "nodos_filhos": [
+                                                        {
+                                                            "terminal_folha": "OPERADOR",
+                                                            "valor_extraido": "+"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "terminal_folha": "FECHA_PAREN",
+                                    "valor_extraido": ")"
+                                }
+                            ]
+                        },
+                        {
+                            "nodo_pai": "comando_lista",
+                            "producao_acionada": "comando comando_lista",
+                            "nodos_filhos": [
+                                {
+                                    "nodo_pai": "comando",
+                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                    "nodos_filhos": [
+                                        {
+                                            "terminal_folha": "ABRE_PAREN",
+                                            "valor_extraido": "("
+                                        },
+                                        {
+                                            "nodo_pai": "conteudo_comando",
+                                            "producao_acionada": "NUMERO sufixo_numero",
+                                            "nodos_filhos": [
+                                                {
+                                                    "terminal_folha": "NUMERO",
+                                                    "valor_extraido": "10"
+                                                },
+                                                {
+                                                    "nodo_pai": "sufixo_numero",
+                                                    "producao_acionada": "NUMERO operador_final",
+                                                    "nodos_filhos": [
+                                                        {
+                                                            "terminal_folha": "NUMERO",
+                                                            "valor_extraido": "3"
+                                                        },
+                                                        {
+                                                            "nodo_pai": "operador_final",
+                                                            "producao_acionada": "OPERADOR",
+                                                            "nodos_filhos": [
+                                                                {
+                                                                    "terminal_folha": "OPERADOR",
+                                                                    "valor_extraido": "/"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "terminal_folha": "FECHA_PAREN",
+                                            "valor_extraido": ")"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "nodo_pai": "comando_lista",
+                                    "producao_acionada": "comando comando_lista",
+                                    "nodos_filhos": [
+                                        {
+                                            "nodo_pai": "comando",
+                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                            "nodos_filhos": [
+                                                {
+                                                    "terminal_folha": "ABRE_PAREN",
+                                                    "valor_extraido": "("
+                                                },
+                                                {
+                                                    "nodo_pai": "conteudo_comando",
+                                                    "producao_acionada": "NUMERO sufixo_numero",
+                                                    "nodos_filhos": [
+                                                        {
+                                                            "terminal_folha": "NUMERO",
+                                                            "valor_extraido": "10"
+                                                        },
+                                                        {
+                                                            "nodo_pai": "sufixo_numero",
+                                                            "producao_acionada": "NUMERO operador_final",
+                                                            "nodos_filhos": [
+                                                                {
+                                                                    "terminal_folha": "NUMERO",
+                                                                    "valor_extraido": "3"
+                                                                },
+                                                                {
+                                                                    "nodo_pai": "operador_final",
+                                                                    "producao_acionada": "OPERADOR",
+                                                                    "nodos_filhos": [
+                                                                        {
+                                                                            "terminal_folha": "OPERADOR",
+                                                                            "valor_extraido": "%"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "terminal_folha": "FECHA_PAREN",
+                                                    "valor_extraido": ")"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "nodo_pai": "comando_lista",
+                                            "producao_acionada": "comando comando_lista",
+                                            "nodos_filhos": [
+                                                {
+                                                    "nodo_pai": "comando",
+                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                    "nodos_filhos": [
+                                                        {
+                                                            "terminal_folha": "ABRE_PAREN",
+                                                            "valor_extraido": "("
+                                                        },
+                                                        {
+                                                            "nodo_pai": "conteudo_comando",
+                                                            "producao_acionada": "NUMERO sufixo_numero",
+                                                            "nodos_filhos": [
+                                                                {
+                                                                    "terminal_folha": "NUMERO",
+                                                                    "valor_extraido": "2.0"
+                                                                },
+                                                                {
+                                                                    "nodo_pai": "sufixo_numero",
+                                                                    "producao_acionada": "NUMERO operador_final",
+                                                                    "nodos_filhos": [
+                                                                        {
+                                                                            "terminal_folha": "NUMERO",
+                                                                            "valor_extraido": "8"
+                                                                        },
+                                                                        {
+                                                                            "nodo_pai": "operador_final",
+                                                                            "producao_acionada": "OPERADOR",
+                                                                            "nodos_filhos": [
+                                                                                {
+                                                                                    "terminal_folha": "OPERADOR",
+                                                                                    "valor_extraido": "^"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "terminal_folha": "FECHA_PAREN",
+                                                            "valor_extraido": ")"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "nodo_pai": "comando_lista",
+                                                    "producao_acionada": "comando comando_lista",
+                                                    "nodos_filhos": [
+                                                        {
+                                                            "nodo_pai": "comando",
+                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                            "nodos_filhos": [
+                                                                {
+                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                    "valor_extraido": "("
+                                                                },
+                                                                {
+                                                                    "nodo_pai": "conteudo_comando",
+                                                                    "producao_acionada": "NUMERO sufixo_numero",
+                                                                    "nodos_filhos": [
+                                                                        {
+                                                                            "terminal_folha": "NUMERO",
+                                                                            "valor_extraido": "2.0"
+                                                                        },
+                                                                        {
+                                                                            "nodo_pai": "sufixo_numero",
+                                                                            "producao_acionada": "NUMERO operador_final",
+                                                                            "nodos_filhos": [
+                                                                                {
+                                                                                    "terminal_folha": "NUMERO",
+                                                                                    "valor_extraido": "8"
+                                                                                },
+                                                                                {
+                                                                                    "nodo_pai": "operador_final",
+                                                                                    "producao_acionada": "OPERADOR",
+                                                                                    "nodos_filhos": [
+                                                                                        {
+                                                                                            "terminal_folha": "OPERADOR",
+                                                                                            "valor_extraido": "*"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                    "valor_extraido": ")"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "nodo_pai": "comando_lista",
+                                                            "producao_acionada": "comando comando_lista",
+                                                            "nodos_filhos": [
+                                                                {
+                                                                    "nodo_pai": "comando",
+                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                    "nodos_filhos": [
+                                                                        {
+                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                            "valor_extraido": "("
+                                                                        },
+                                                                        {
+                                                                            "nodo_pai": "conteudo_comando",
+                                                                            "producao_acionada": "NUMERO sufixo_numero",
+                                                                            "nodos_filhos": [
+                                                                                {
+                                                                                    "terminal_folha": "NUMERO",
+                                                                                    "valor_extraido": "1"
+                                                                                },
+                                                                                {
+                                                                                    "nodo_pai": "sufixo_numero",
+                                                                                    "producao_acionada": "KEYWORD_RES",
+                                                                                    "nodos_filhos": [
+                                                                                        {
+                                                                                            "terminal_folha": "KEYWORD_RES",
+                                                                                            "valor_extraido": "RES"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                            "valor_extraido": ")"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "nodo_pai": "comando_lista",
+                                                                    "producao_acionada": "comando comando_lista",
+                                                                    "nodos_filhos": [
+                                                                        {
+                                                                            "nodo_pai": "comando",
+                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                            "nodos_filhos": [
+                                                                                {
+                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                    "valor_extraido": "("
+                                                                                },
+                                                                                {
+                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                    "producao_acionada": "NUMERO sufixo_numero",
+                                                                                    "nodos_filhos": [
+                                                                                        {
+                                                                                            "terminal_folha": "NUMERO",
+                                                                                            "valor_extraido": "5.0"
+                                                                                        },
+                                                                                        {
+                                                                                            "nodo_pai": "sufixo_numero",
+                                                                                            "producao_acionada": "MEMORIA apos_mem",
+                                                                                            "nodos_filhos": [
+                                                                                                {
+                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                    "valor_extraido": "VAR"
+                                                                                                },
+                                                                                                {
+                                                                                                    "nodo_pai": "apos_mem",
+                                                                                                    "producao_acionada": "ε",
+                                                                                                    "nodos_filhos": [
+                                                                                                        {
+                                                                                                            "terminal_folha": "ε"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                    "valor_extraido": ")"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "nodo_pai": "comando_lista",
+                                                                            "producao_acionada": "comando comando_lista",
+                                                                            "nodos_filhos": [
+                                                                                {
+                                                                                    "nodo_pai": "comando",
+                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                    "nodos_filhos": [
+                                                                                        {
+                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                            "valor_extraido": "("
+                                                                                        },
+                                                                                        {
+                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                            "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                            "nodos_filhos": [
+                                                                                                {
+                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                    "valor_extraido": "VAR"
+                                                                                                },
+                                                                                                {
+                                                                                                    "nodo_pai": "sufixo_memoria",
+                                                                                                    "producao_acionada": "ε",
+                                                                                                    "nodos_filhos": [
+                                                                                                        {
+                                                                                                            "terminal_folha": "ε"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                            "valor_extraido": ")"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "nodo_pai": "comando_lista",
+                                                                                    "producao_acionada": "comando comando_lista",
+                                                                                    "nodos_filhos": [
+                                                                                        {
+                                                                                            "nodo_pai": "comando",
+                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                            "nodos_filhos": [
+                                                                                                {
+                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                    "valor_extraido": "("
+                                                                                                },
+                                                                                                {
+                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                    "producao_acionada": "comando sufixo_comando",
+                                                                                                    "nodos_filhos": [
+                                                                                                        {
+                                                                                                            "nodo_pai": "comando",
+                                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                            "nodos_filhos": [
+                                                                                                                {
+                                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                                    "valor_extraido": "("
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                                    "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "MEMORIA",
+                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "sufixo_memoria",
+                                                                                                                            "producao_acionada": "NUMERO operador_final",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "NUMERO",
+                                                                                                                                    "valor_extraido": "10.0"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "operador_final",
+                                                                                                                                    "producao_acionada": "OPERADOR_REL",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "OPERADOR_REL",
+                                                                                                                                            "valor_extraido": "<"
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                                    "valor_extraido": ")"
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "nodo_pai": "sufixo_comando",
+                                                                                                            "producao_acionada": "comando apos_cmd",
+                                                                                                            "nodos_filhos": [
+                                                                                                                {
+                                                                                                                    "nodo_pai": "comando",
+                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                            "valor_extraido": "("
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                            "producao_acionada": "comando sufixo_comando",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "comando",
+                                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                                            "valor_extraido": "("
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                                            "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "sufixo_memoria",
+                                                                                                                                                    "producao_acionada": "NUMERO operador_final",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "NUMERO",
+                                                                                                                                                            "valor_extraido": "1.0"
+                                                                                                                                                        },
+                                                                                                                                                        {
+                                                                                                                                                            "nodo_pai": "operador_final",
+                                                                                                                                                            "producao_acionada": "OPERADOR",
+                                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                                {
+                                                                                                                                                                    "terminal_folha": "OPERADOR",
+                                                                                                                                                                    "valor_extraido": "+"
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "sufixo_comando",
+                                                                                                                                    "producao_acionada": "MEMORIA apos_mem",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "MEMORIA",
+                                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "apos_mem",
+                                                                                                                                            "producao_acionada": "ε",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                            "valor_extraido": ")"
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "nodo_pai": "apos_cmd",
+                                                                                                                    "producao_acionada": "KEYWORD_WHILE",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "KEYWORD_WHILE",
+                                                                                                                            "valor_extraido": "WHILE"
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                    "valor_extraido": ")"
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "nodo_pai": "comando_lista",
+                                                                                            "producao_acionada": "comando comando_lista",
+                                                                                            "nodos_filhos": [
+                                                                                                {
+                                                                                                    "nodo_pai": "comando",
+                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                    "nodos_filhos": [
+                                                                                                        {
+                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                            "valor_extraido": "("
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                            "producao_acionada": "comando sufixo_comando",
+                                                                                                            "nodos_filhos": [
+                                                                                                                {
+                                                                                                                    "nodo_pai": "comando",
+                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                            "valor_extraido": "("
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                            "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "sufixo_memoria",
+                                                                                                                                    "producao_acionada": "NUMERO operador_final",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "NUMERO",
+                                                                                                                                            "valor_extraido": "5.0"
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "operador_final",
+                                                                                                                                            "producao_acionada": "OPERADOR_REL",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "OPERADOR_REL",
+                                                                                                                                                    "valor_extraido": ">"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                            "valor_extraido": ")"
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "nodo_pai": "sufixo_comando",
+                                                                                                                    "producao_acionada": "comando apos_cmd",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "comando",
+                                                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                                                    "valor_extraido": "("
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                                                    "producao_acionada": "NUMERO sufixo_numero",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "NUMERO",
+                                                                                                                                            "valor_extraido": "1.0"
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "sufixo_numero",
+                                                                                                                                            "producao_acionada": "MEMORIA apos_mem",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                                                                    "valor_extraido": "RESULTADO"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "apos_mem",
+                                                                                                                                                    "producao_acionada": "ε",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "apos_cmd",
+                                                                                                                            "producao_acionada": "comando KEYWORD_IF",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "comando",
+                                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                                            "valor_extraido": "("
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                                            "producao_acionada": "NUMERO sufixo_numero",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "NUMERO",
+                                                                                                                                                    "valor_extraido": "0.0"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "sufixo_numero",
+                                                                                                                                                    "producao_acionada": "MEMORIA apos_mem",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "MEMORIA",
+                                                                                                                                                            "valor_extraido": "RESULTADO"
+                                                                                                                                                        },
+                                                                                                                                                        {
+                                                                                                                                                            "nodo_pai": "apos_mem",
+                                                                                                                                                            "producao_acionada": "ε",
+                                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                                {
+                                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "KEYWORD_IF",
+                                                                                                                                    "valor_extraido": "IF"
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                            "valor_extraido": ")"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "nodo_pai": "comando_lista",
+                                                                                                    "producao_acionada": "comando comando_lista",
+                                                                                                    "nodos_filhos": [
+                                                                                                        {
+                                                                                                            "nodo_pai": "comando",
+                                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                            "nodos_filhos": [
+                                                                                                                {
+                                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                                    "valor_extraido": "("
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                                    "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "MEMORIA",
+                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "sufixo_memoria",
+                                                                                                                            "producao_acionada": "ε",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                                    "valor_extraido": ")"
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "nodo_pai": "comando_lista",
+                                                                                                            "producao_acionada": "comando comando_lista",
+                                                                                                            "nodos_filhos": [
+                                                                                                                {
+                                                                                                                    "nodo_pai": "comando",
+                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                            "valor_extraido": "("
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                            "producao_acionada": "NUMERO sufixo_numero",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "NUMERO",
+                                                                                                                                    "valor_extraido": "5.0"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "sufixo_numero",
+                                                                                                                                    "producao_acionada": "MEMORIA apos_mem",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "MEMORIA",
+                                                                                                                                            "valor_extraido": "MEM"
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "apos_mem",
+                                                                                                                                            "producao_acionada": "ε",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                            "valor_extraido": ")"
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "nodo_pai": "comando_lista",
+                                                                                                                    "producao_acionada": "comando comando_lista",
+                                                                                                                    "nodos_filhos": [
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "comando",
+                                                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                                                    "valor_extraido": "("
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                                                    "producao_acionada": "NUMERO sufixo_numero",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "NUMERO",
+                                                                                                                                            "valor_extraido": "10.0"
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "sufixo_numero",
+                                                                                                                                            "producao_acionada": "MEMORIA apos_mem",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                                                                    "valor_extraido": "MEM"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "apos_mem",
+                                                                                                                                                    "producao_acionada": "ε",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "nodo_pai": "comando_lista",
+                                                                                                                            "producao_acionada": "comando comando_lista",
+                                                                                                                            "nodos_filhos": [
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "comando",
+                                                                                                                                    "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "ABRE_PAREN",
+                                                                                                                                            "valor_extraido": "("
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "conteudo_comando",
+                                                                                                                                            "producao_acionada": "MEMORIA sufixo_memoria",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "MEMORIA",
+                                                                                                                                                    "valor_extraido": "MEM"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "sufixo_memoria",
+                                                                                                                                                    "producao_acionada": "ε",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "terminal_folha": "FECHA_PAREN",
+                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "nodo_pai": "comando_lista",
+                                                                                                                                    "producao_acionada": "comando comando_lista",
+                                                                                                                                    "nodos_filhos": [
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "comando",
+                                                                                                                                            "producao_acionada": "ABRE_PAREN conteudo_comando FECHA_PAREN",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "ABRE_PAREN",
+                                                                                                                                                    "valor_extraido": "("
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "nodo_pai": "conteudo_comando",
+                                                                                                                                                    "producao_acionada": "KEYWORD_END",
+                                                                                                                                                    "nodos_filhos": [
+                                                                                                                                                        {
+                                                                                                                                                            "terminal_folha": "KEYWORD_END",
+                                                                                                                                                            "valor_extraido": "END"
+                                                                                                                                                        }
+                                                                                                                                                    ]
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "FECHA_PAREN",
+                                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "nodo_pai": "comando_lista",
+                                                                                                                                            "producao_acionada": "ε",
+                                                                                                                                            "nodos_filhos": [
+                                                                                                                                                {
+                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            ]
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
