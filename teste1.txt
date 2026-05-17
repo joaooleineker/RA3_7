@@ -3,10 +3,15 @@
 (10 3 /)
 (10 3 %)
 (2.0 8 ^)
+(2.0 8 *)
 (1 RES)
 (5.0 VAR)
 (VAR)
 ((VAR 10.0 <) ((VAR 1.0 +) VAR) WHILE)
 ((VAR 5.0 >) (1.0 RESULTADO) (0.0 RESULTADO) IF)
 (VAR)
+*{ comentario em linha inteira }*
+(5.0 MEM) *{ comentario no final }*
+(10.0 *{comentario no meio de teste}* MEM)
+(MEM)
 (END)

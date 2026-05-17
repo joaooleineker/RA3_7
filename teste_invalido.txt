@@ -1,0 +1,7 @@
+(START)
+*{ comentario em linha inteira }*
+(5.0 VAR) *{ comentario no final }*
+(5.0 *{ comentario no meio }* VAR)
+*{ comentario aberto -> faz com que o teste seja invalido
+(VAR)
+(END)

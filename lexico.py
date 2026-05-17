@@ -39,6 +39,8 @@ def parseExpressao(linha, vetorTokens):
 
         if char == " " or char == "\t":
             pos += 1
+        elif char == "*" and pos + 1 < len(linha) and linha[pos + 1] == "{":
+            pos = estadoComentario(linha, pos, vetorTokens)
         elif char.isdigit() or char == ".":
             pos = estadoNumero(linha, pos, vetorTokens)
         elif char in "-+*/|%^":
@@ -51,6 +53,21 @@ def parseExpressao(linha, vetorTokens):
             pos = estadoIdentificador(linha, pos, vetorTokens)
         else:
             pos = estadoErro(linha, pos, vetorTokens)
+
+def estadoComentario(linha, pos, tokens):
+    pos += 2 # ignora '*{'
+
+    # Continua 'procurando' enquanto estiver pelo menos dois caracteres
+    while pos + 1 < len(linha):
+        if linha[pos] == "}" and linha[pos + 1] == "*":
+            return pos + 2
+
+        pos += 1
+
+    novoToken = Token("ERRO", "comentario_nao_fechado")
+    tokens.append(novoToken)
+
+    return len(linha)
 
 def estadoNumero(linha, pos, tokens):
     textoNumero = ""
