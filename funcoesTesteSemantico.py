@@ -18,6 +18,7 @@ from semantico import (
     decorarArvoreComLinhas,
     possuiErroLexico,
     possuiErroSintatico,
+    gerarArvoreAtribuida,
 )
 
 # Nome do arquivo temporário usado pelos testes para simular entradas
@@ -395,6 +396,76 @@ def testarVariaveisMemoria():
     print("=" * 50 + "\n")
 
 
+def testarArvoreAtribuida():
+    """
+    Valida a geracao da arvore atribuida (aumentada), verificando se os arquivos
+    'arvore_atribuida.json' e 'arvore_atribuida.md' sao criados e contem as decoracoes.
+    """
+    print("=" * 50)
+    print("Teste: geracao da arvore atribuida (Aluno 4)\n")
+
+    # Programa simples para teste
+    codigo = [
+        "(START)",
+        "(5.0 VAR)",
+        "(VAR)",
+        "(END)"
+    ]
+
+    # Remove os arquivos se ja existirem para garantir que foram recriados
+    for nome_arq in ("arvore_atribuida.json", "arvore_atribuida.md"):
+        if os.path.exists(nome_arq):
+            os.remove(nome_arq)
+
+    # Executa a analise
+    tabela, erros_decl, erros_tipo = auxAnalisarPrograma(codigo)
+
+    passou = False
+    if tabela is not None and len(erros_decl) == 0 and len(erros_tipo) == 0:
+        try:
+            # Escreve o codigo no arquivo temporario
+            with open(ARQUIVO_TEMP, "w", encoding="utf-8") as arquivo_temp:
+                for linha in codigo:
+                    arquivo_temp.write(linha + "\n")
+
+            tokens, arvore = prepararEntradaSemantica(ARQUIVO_TEMP)
+            decorarArvoreComLinhas(arvore, tokens)
+            tabela, _ = construirTabelaSimbolos(arvore)
+
+            # Gera a arvore atribuida
+            arvore_atrib = gerarArvoreAtribuida(arvore, tabela)
+
+            # Verifica se os arquivos foram criados e tem o conteudo esperado
+            tem_json = os.path.exists("arvore_atribuida.json")
+            tem_md = os.path.exists("arvore_atribuida.md")
+
+            # Verifica se a decoracao esta correta lendo o MD
+            conteudo_md = ""
+            if tem_md:
+                with open("arvore_atribuida.md", "r", encoding="utf-8") as arquivo_atrib_md:
+                    conteudo_md = arquivo_atrib_md.read()
+
+            contem_tipo_cat = "tipo: real, cat: var_store" in conteudo_md and "tipo: real, cat: var_load" in conteudo_md
+
+            if tem_json and tem_md and contem_tipo_cat:
+                passou = True
+        except Exception as e:
+            print(f"       Erro na execucao do teste: {e}")
+        finally:
+            if os.path.exists(ARQUIVO_TEMP):
+                os.remove(ARQUIVO_TEMP)
+
+    if passou:
+        status = "OK"
+        print(f"{status} | arvore atribuida gerada com sucesso e devidamente decorada")
+    else:
+        status = "FALHOU"
+        print(f"{status} | falha na geracao ou decoracao da arvore atribuida")
+
+    print(f"\nResultado: {1 if passou else 0} aprovados, {0 if passou else 1} reprovados")
+    print("=" * 50 + "\n")
+
+
 def iniciarTestesSemantico():
     """Executa todos os testes do analisador semantico (verificarTipos)."""
     print("\nRealizacao dos testes do analisador semantico:\n")
@@ -405,6 +476,7 @@ def iniciarTestesSemantico():
     testarCondicoesControle()
     testarExpressoesAninhadas()
     testarVariaveisMemoria()
+    testarArvoreAtribuida()
 
 
 if __name__ == "__main__":

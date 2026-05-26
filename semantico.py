@@ -892,8 +892,233 @@ def auxSalvarRelatorioTipos(erros_tipo, nome_arquivo="relatorio_tipos.md"):
         print(f"Erro ao salvar relatorio de tipos: {erro_io}")
 
 
+def copiarArvore(nodo):
+    """
+    Realiza uma cópia profunda (deep copy) manual da árvore,
+    evitando a necessidade de importar o módulo 'copy'.
+    """
+    if isinstance(nodo, dict):
+        return {chave: copiarArvore(valor) for chave, valor in nodo.items()}
+    elif isinstance(nodo, list):
+        return [copiarArvore(item) for item in nodo]
+    else:
+        return nodo
+
 def gerarArvoreAtribuida(arvore_sintatica, tabela_simbolos):
-    pass
+    """
+    Percorre a árvore sintática e constrói a árvore sintática atribuída (aumentada),
+    anotando cada nó relevante com tipo, categoria semântica e informação para Assembly.
+    Fase final da análise semântica (Aluno 4).
+    """
+    arvore_atribuida = copiarArvore(arvore_sintatica)
+
+    # Executa a decoração recursiva da árvore
+    auxDecorarArvoreAtribuida(arvore_atribuida, tabela_simbolos)
+
+    # Salva os artefatos nos arquivos Markdown e JSON
+    salvarArvoreAtribuida(arvore_atribuida)
+
+    return arvore_atribuida
+
+
+def auxDecorarArvoreAtribuida(arvore, tabela):
+    """
+    Função auxiliar recursiva que percorre a árvore sintática decorando os nós
+    com tipo, categoria_semantica e info_assembly.
+    """
+    if not isinstance(arvore, dict):
+        return
+
+    nome_nodo = arvore.get("nodo_pai", "")
+
+    # Decora os nós que contêm comandos
+    if nome_nodo == "conteudo_comando":
+        tipo_cmd = detectarTipoComando(arvore)
+
+        if tipo_cmd in ("start", "end"):
+            arvore["tipo"] = "void"
+            arvore["categoria_semantica"] = "controle"
+            arvore["info_assembly"] = "NOP"
+            for filho in arvore.get("nodos_filhos", []):
+                if isinstance(filho, dict) and "terminal_folha" in filho:
+                    filho["tipo"] = "void"
+                    filho["categoria_semantica"] = "controle"
+                    filho["info_assembly"] = "NOP"
+            return
+
+        if tipo_cmd in ("while", "if"):
+            arvore["tipo"] = "void"
+            arvore["categoria_semantica"] = "controle"
+            arvore["info_assembly"] = "DESVIO_CONDICIONAL"
+            # Processa sub-estruturas (condição, then, else) recursivamente
+            for filho in arvore.get("nodos_filhos", []):
+                auxDecorarArvoreAtribuida(filho, tabela)
+            return
+
+        # Para comandos regulares, simula a pilha RPN para inferir categorias e tipos precisos
+        terminais = coletarTerminais(arvore)
+        pilha = []
+
+        for terminal in terminais:
+            tipo_token = terminal.get("terminal_folha", "")
+            valor = terminal.get("valor_extraido", "")
+
+            if tipo_token in ("ABRE_PAREN", "FECHA_PAREN", "ε"):
+                terminal["tipo"] = "void"
+                terminal["categoria_semantica"] = "pontuacao"
+                terminal["info_assembly"] = "NENHUM"
+                continue
+
+            if tipo_token == "NUMERO":
+                tipo_inferido = "real" if "." in valor else "inteiro"
+                terminal["tipo"] = tipo_inferido
+                terminal["categoria_semantica"] = "literal"
+                terminal["info_assembly"] = f"LDR R0, ={valor}"
+                pilha.append(tipo_inferido)
+
+            elif tipo_token == "OPERADOR":
+                if len(pilha) >= 2:
+                    tipo_b = pilha.pop()
+                    tipo_a = pilha.pop()
+                    tipo_res = inferirTipoOperacao(valor, tipo_a, tipo_b)
+                else:
+                    tipo_res = "real"
+                terminal["tipo"] = tipo_res
+                terminal["categoria_semantica"] = "operador_aritmetico"
+                terminal["info_assembly"] = f"OP_ARITMETICA {valor}"
+                pilha.append(tipo_res)
+
+            elif tipo_token == "OPERADOR_REL":
+                if len(pilha) >= 2:
+                    pilha.pop()
+                    pilha.pop()
+                terminal["tipo"] = "bool"
+                terminal["categoria_semantica"] = "operador_relacional"
+                terminal["info_assembly"] = f"OP_RELACIONAL {valor}"
+                pilha.append("bool")
+
+            elif tipo_token == "MEMORIA":
+                entrada = tabela.buscar(valor)
+                if len(pilha) > 0:
+                    # Caso de atribuição (STORE)
+                    tipo_valor = pilha.pop()
+                    terminal["tipo"] = tipo_valor
+                    terminal["categoria_semantica"] = "var_store"
+                    terminal["info_assembly"] = f"STR R0, [{valor}]"
+                else:
+                    # Caso de leitura (LOAD)
+                    tipo_mem = entrada.tipo if entrada else "real"
+                    terminal["tipo"] = tipo_mem
+                    terminal["categoria_semantica"] = "var_load"
+                    terminal["info_assembly"] = f"LDR R0, [{valor}]"
+                    pilha.append(tipo_mem)
+
+            elif tipo_token == "KEYWORD_RES":
+                if len(pilha) >= 1:
+                    pilha.pop()
+                tipo_res = "real"
+                terminal["tipo"] = tipo_res
+                terminal["categoria_semantica"] = "historico_res"
+                terminal["info_assembly"] = "LDR R0, [HISTORICO]"
+                pilha.append(tipo_res)
+
+        # Anota o próprio comando com o seu tipo resultante
+        if len(pilha) == 1:
+            arvore["tipo"] = pilha[0]
+            arvore["categoria_semantica"] = "expressao"
+        else:
+            arvore["tipo"] = "void"
+            arvore["categoria_semantica"] = "expressao"
+
+    elif "nodos_filhos" in arvore:
+        for filho in arvore["nodos_filhos"]:
+            auxDecorarArvoreAtribuida(filho, tabela)
+
+
+def salvarArvoreAtribuida(arvore_atribuida):
+    """
+    Exporta a árvore atribuída nos formatos JSON e Markdown.
+    """
+    import json
+
+    nome_json = "arvore_atribuida.json"
+    nome_md = "arvore_atribuida.md"
+
+    try:
+        # Salva o arquivo JSON
+        with open(nome_json, "w", encoding="utf-8") as arquivo_json:
+            json.dump(arvore_atribuida, arquivo_json, ensure_ascii=False, indent=4)
+        print(f"Sucesso: Árvore atribuída exportada para '{nome_json}'.")
+
+        # Salva o arquivo Markdown
+        linhas_arvore = construirTextoArvoreAtribuida(arvore_atribuida)
+        texto_final = "\n".join(linhas_arvore)
+
+        with open(nome_md, "w", encoding="utf-8") as arquivo_md:
+            arquivo_md.write("# Árvore Sintática Atribuída (Aumentada)\n\n")
+            arquivo_md.write("```text\n")
+            arquivo_md.write(texto_final + "\n")
+            arquivo_md.write("```\n")
+        print(f"Sucesso: Árvore atribuída exportada para '{nome_md}'.")
+
+    except Exception as erro_io:
+        print(f"Erro ao salvar arquivos da árvore atribuída: {erro_io}")
+
+
+def construirTextoArvoreAtribuida(no, prefixo="", eh_ultimo=True, eh_raiz=True):
+    """
+    Percorre a árvore atribuída gerando sua representação em formato de árvore de texto,
+    incluindo as anotações semânticas de tipo e categoria.
+    """
+    linhas = []
+
+    if no.get("nodo_pai") == "comando_descartado":
+        return []
+
+    # Define o rótulo do nó com suas atribuições
+    tipo = no.get("tipo")
+    categoria = no.get("categoria_semantica")
+    sufixo_atrib = f" [tipo: {tipo}, cat: {categoria}]" if tipo and categoria else ""
+
+    if "terminal_folha" in no:
+        valor = no.get("valor_extraido", "")
+        texto_no = f"{no['terminal_folha']} ({valor}){sufixo_atrib}"
+    elif "nodo_pai" in no:
+        texto_no = f"{no['nodo_pai']}{sufixo_atrib}"
+    elif "erro_sintatico" in no:
+        texto_no = f"ERRO SINTÁTICO: {no['erro_sintatico']}"
+    elif "erro_nodo_pai" in no:
+        texto_no = f"FALHA NO NÓ: {no['erro_nodo_pai']} (Token inesperado: {no.get('falha_registro', '')})"
+    else:
+        texto_no = "Nó Desconhecido"
+
+    if eh_raiz:
+        linhas.append(texto_no)
+        novo_prefixo = ""
+    else:
+        if eh_ultimo:
+            marcador = "└── "
+            novo_prefixo = prefixo + "    "
+        else:
+            marcador = "├── "
+            novo_prefixo = prefixo + "│   "
+
+        linhas.append(f"{prefixo}{marcador}{texto_no}")
+
+    if "nodos_filhos" in no:
+        filhos = no["nodos_filhos"]
+    else:
+        filhos = []
+
+    total_filhos = len(filhos)
+
+    for indice_filho in range(total_filhos):
+        filho = filhos[indice_filho]
+        ultimo_filho = (indice_filho == total_filhos - 1)
+        linhas_filho = construirTextoArvoreAtribuida(filho, novo_prefixo, ultimo_filho, False)
+        linhas.extend(linhas_filho)
+
+    return linhas
 
 def gerarAssembly(arvore_atribuida):
     pass
@@ -984,6 +1209,8 @@ def executarAnaliseSemantica(nome_arquivo):
         print()
     else:
         print("Análise semântica concluída sem erros.\n")
+        # Aluno 4: Gera a árvore atribuída se não houver erros
+        gerarArvoreAtribuida(arvore_sintatica_inicial, tabela_simbolos)
 
     print(f"{'='*60}")
     print("ARQUIVOS DE SAÍDA GERADOS")
@@ -993,6 +1220,8 @@ def executarAnaliseSemantica(nome_arquivo):
     print("  - relatorio_tipos.md")
     print("  - arvore_sintatica.md")
     print("  - arvore_sintatica.json")
+    print("  - arvore_atribuida.json")
+    print("  - arvore_atribuida.md")
     print(f"{'='*60}")
     print("Analisador semântico concluído.")
 
