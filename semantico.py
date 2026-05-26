@@ -887,7 +887,7 @@ def auxSalvarRelatorioTipos(erros_tipo, nome_arquivo="relatorio_tipos.md"):
     try:
         with open(nome_arquivo, "w", encoding="utf-8") as arquivo_saida:
             arquivo_saida.write("\n".join(linhas) + "\n")
-        print(f"Relatorio de verificacao de tipos salvo em '{nome_arquivo}'.")
+        print(f"Relatório de verificação de tipos salvo em '{nome_arquivo}'.")
     except Exception as erro_io:
         print(f"Erro ao salvar relatorio de tipos: {erro_io}")
 
@@ -938,12 +938,12 @@ def executarAnaliseSemantica(nome_arquivo):
 
     # Reportar erros léxicos antes da etapa semântica
     if possuiErroLexico(tokens):
-        print("Analise semantica interrompida: foram encontrados erros lexicos.")
+        print("Análise semântica interrompida: foram encontrados erros léxicos.")
         return
 
     # Reportar erros sintáticos antes da etapa semântica
     if possuiErroSintatico(arvore_sintatica_inicial):
-        print("Analise semantica interrompida: foram encontrados erros sintaticos.")
+        print("Análise semântica interrompida: foram encontrados erros sintáticos.")
         return
 
     decorarArvoreComLinhas(arvore_sintatica_inicial, tokens)
@@ -952,10 +952,10 @@ def executarAnaliseSemantica(nome_arquivo):
     tabela_simbolos, erros_declaracao = construirTabelaSimbolos(arvore_sintatica_inicial)
 
     print(f"\n{'='*60}")
-    print("TABELA DE SIMBOLOS")
+    print("TABELA DE SÍMBOLOS")
     print(f"{'='*60}")
     if tabela_simbolos.simbolos:
-        print(f"  {'Nome':<15} | {'Tipo':<8} | {'Definicao':<10} | {'Ultimo Uso':<10} | {'Escopo'}")
+        print(f"  {'Nome':<15} | {'Tipo':<8} | {'Definição':<10} | {'Último Uso':<10} | {'Escopo'}")
         print(f"  {'-'*15}-+-{'-'*8}-+-{'-'*10}-+-{'-'*10}-+-{'-'*8}")
         for nome_var in sorted(tabela_simbolos.simbolos.keys()):
             entrada = tabela_simbolos.simbolos[nome_var]
@@ -964,7 +964,7 @@ def executarAnaliseSemantica(nome_arquivo):
                 f"linha {entrada.linha_definicao:<4} | linha {entrada.linha_ultimo_uso:<4} | {entrada.escopo}"
             )
     else:
-        print("  (nenhuma variavel registrada)")
+        print("  (nenhuma variável registrada)")
     print()
 
     # Aluno 3: verifica compatibilidade de tipos nas expressões
@@ -975,18 +975,18 @@ def executarAnaliseSemantica(nome_arquivo):
 
     if todos_erros:
         print(f"{'='*60}")
-        print(f"ERROS SEMANTICOS ENCONTRADOS: {len(todos_erros)}")
+        print(f"ERROS SEMÂNTICOS ENCONTRADOS: {len(todos_erros)}")
         print(f"{'='*60}")
         for erro in todos_erros:
             linha_err = erro.get("linha", "?")
             mensagem = erro.get("mensagem", "")
-            print(f"  Erro semantico (linha {linha_err}): {mensagem}")
+            print(f"  Erro semântico (linha {linha_err}): {mensagem}")
         print()
     else:
-        print("Analise semantica concluida sem erros.\n")
+        print("Análise semântica concluída sem erros.\n")
 
     print(f"{'='*60}")
-    print("ARQUIVOS DE SAIDA GERADOS")
+    print("ARQUIVOS DE SAÍDA GERADOS")
     print(f"{'='*60}")
     print("  - tabela_simbolos.md")
     print("  - erros_semanticos.md")
@@ -994,7 +994,7 @@ def executarAnaliseSemantica(nome_arquivo):
     print("  - arvore_sintatica.md")
     print("  - arvore_sintatica.json")
     print(f"{'='*60}")
-    print("Analisador semantico concluido.")
+    print("Analisador semântico concluído.")
 
 def main():
     if len(sys.argv) < 2:
