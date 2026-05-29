@@ -1,13 +1,9 @@
-"""
 # Integrantes do grupo (ordem alfabética):
 # Daniel de Almeida Santos Bina - danielbina
 # Eduardo Ferreira de Melo - edufmelo
 # João Eduardo Faccin Leineker - joaooleineker
 #
 # Nome do grupo no Canvas: RA3_7
-
-Funções de teste para o analisador sintático.
-"""
 from sintatico import construirGramatica, parsear
 from lexico import parseExpressao
 

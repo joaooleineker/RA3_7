@@ -466,9 +466,219 @@ def testarArvoreAtribuida():
     print("=" * 50 + "\n")
 
 
+def testarErrosLexicos():
+    """
+    Valida que o pipeline semântico aborta ao encontrar tokens léxicos inválidos.
+    O analisador não deve prosseguir para a etapa semântica quando há erros léxicos.
+    """
+    print("=" * 50)
+    print("Teste: erros lexicos\n")
+
+    # Em todos os casos abaixo espera-se que o pipeline aborte (tabela retorna None)
+    casos = [
+        ("token invalido '@' -> aborta semantico",
+         ["(START)", "(3 @ 2 +)", "(END)"], True),
+        ("numero mal-formado '3.1.4' -> aborta semantico",
+         ["(START)", "(3.1.4 2 +)", "(END)"], True),
+        ("identificador minusculo 'var' -> aborta semantico",
+         ["(START)", "(5 var)", "(END)"], True),
+        ("programa valido -> nao aborta",
+         ["(START)", "(3 2 +)", "(END)"], False),
+    ]
+
+    aprovados = 0
+    reprovados = 0
+
+    for descricao, codigo, espera_abortar in casos:
+        tabela, _, _ = auxAnalisarPrograma(codigo)
+        abortou = (tabela is None)
+        passou = (espera_abortar == abortou)
+
+        if passou:
+            aprovados += 1
+            status = "OK"
+        else:
+            reprovados += 1
+            status = "FALHOU"
+
+        print(f"{status} | {descricao}")
+
+    print(f"\nResultado: {aprovados} aprovados, {reprovados} reprovados")
+    print("=" * 50 + "\n")
+
+
+def testarErrosSintaticos():
+    """
+    Valida que o pipeline semântico aborta ao encontrar erros sintáticos.
+    Cobre ausência de START/END e expressões com estrutura inválida.
+    """
+    print("=" * 50)
+    print("Teste: erros sintaticos\n")
+
+    casos = [
+        # Ausência de marcadores obrigatórios
+        ("sem (START) -> aborta semantico",
+         ["(3 2 +)", "(END)"], True),
+        ("sem (END) -> aborta semantico",
+         ["(START)", "(3 2 +)"], True),
+        # Expressão com estrutura inválida: dois números sem operador
+        ("expressao '(3 2)' sem operador -> aborta semantico",
+         ["(START)", "(3 2)", "(END)"], True),
+        # Programa mínimo válido (só START e END)
+        ("programa minimo valido -> nao aborta",
+         ["(START)", "(END)"], False),
+    ]
+
+    aprovados = 0
+    reprovados = 0
+
+    for descricao, codigo, espera_abortar in casos:
+        tabela, _, _ = auxAnalisarPrograma(codigo)
+        abortou = (tabela is None)
+        passou = (espera_abortar == abortou)
+
+        if passou:
+            aprovados += 1
+            status = "OK"
+        else:
+            reprovados += 1
+            status = "FALHOU"
+
+        print(f"{status} | {descricao}")
+
+    print(f"\nResultado: {aprovados} aprovados, {reprovados} reprovados")
+    print("=" * 50 + "\n")
+
+
+def testarComentarios():
+    """
+    Valida que comentários *{...}* são ignorados pelo léxico e não interferem
+    na análise semântica. Cobre: comentário em linha inteira, no final de linha
+    e no meio de expressão. Também valida que comentário não fechado aborta o pipeline.
+    """
+    print("=" * 50)
+    print("Teste: comentarios em diferentes posicoes\n")
+
+    casos = [
+        # Comentários em posições diferentes não devem gerar erros semânticos
+        ("comentario em linha inteira -> sem erro",
+         ["(START)", "*{ comentario em linha inteira }*", "(5.0 VAR)", "(VAR)", "(END)"],
+         False),
+        ("comentario no final de linha -> sem erro",
+         ["(START)", "(5.0 VAR) *{ comentario no final }*", "(VAR)", "(END)"],
+         False),
+        ("comentario no meio de expressao -> sem erro",
+         ["(START)", "(5.0 *{ comentario no meio }* VAR)", "(VAR)", "(END)"],
+         False),
+        ("multiplos comentarios em posicoes variadas -> sem erro",
+         ["(START)",
+          "*{ comentario inicial }*",
+          "(3 2 +) *{ resultado }*",
+          "(5.0 *{ valor }* VAR)",
+          "(VAR)",
+          "(END)"],
+         False),
+        # Comentário não fechado → erro léxico → pipeline aborta (tabela is None)
+        ("comentario nao fechado -> aborta",
+         ["(START)", "*{ comentario aberto", "(END)"],
+         True),
+    ]
+
+    aprovados = 0
+    reprovados = 0
+
+    for descricao, codigo, espera_abortar in casos:
+        tabela, erros_decl, erros_tipo = auxAnalisarPrograma(codigo)
+
+        if espera_abortar:
+            # Espera que o pipeline aborte (erro léxico: tabela é None)
+            passou = (tabela is None)
+        else:
+            # Espera que o programa seja válido (sem erros semânticos)
+            passou = (tabela is not None) and len(erros_decl + erros_tipo) == 0
+
+        if passou:
+            aprovados += 1
+            status = "OK"
+        else:
+            reprovados += 1
+            status = "FALHOU"
+
+        print(f"{status} | {descricao}")
+        if not passou and tabela is not None:
+            for erro in erros_decl + erros_tipo:
+                print(f"       Erro inesperado: {erro.get('mensagem', '')}")
+
+    print(f"\nResultado: {aprovados} aprovados, {reprovados} reprovados")
+    print("=" * 50 + "\n")
+
+
+def testarCasosExtremos():
+    """
+    Valida casos extremos: programa vazio (só START e END) e aninhamento profundo.
+    Cobre até 5 níveis de aninhamento com inteiros e reais, e aninhamento com erro de tipo.
+    """
+    print("=" * 50)
+    print("Teste: casos extremos\n")
+
+    casos = [
+        # Programa mínimo válido: apenas START e END, sem nenhuma expressão
+        ("programa minimo (so START e END) -> sem erro",
+         ["(START)", "(END)"], True),
+
+        # Aninhamento de 4 níveis com inteiros
+        # ((((1 2 +) 3 *) 4 -) 2 /) = ((9-4)/2) = 2
+        ("aninhamento 4 niveis inteiros -> sem erro",
+         ["(START)", "((((1 2 +) 3 *) 4 -) 2 /)", "(END)"], True),
+
+        # Aninhamento de 5 níveis com inteiros
+        # (((((1 2 +) 3 *) 4 -) 2 /) 3 %) = (2 % 3) = 2
+        ("aninhamento 5 niveis inteiros -> sem erro",
+         ["(START)", "(((((1 2 +) 3 *) 4 -) 2 /) 3 %)", "(END)"], True),
+
+        # Aninhamento de 5 níveis com reais
+        # (((((1.0 2.0 +) 3.0 *) 4.0 -) 2.0 |) 3.0 +)
+        ("aninhamento 5 niveis reais -> sem erro",
+         ["(START)", "(((((1.0 2.0 +) 3.0 *) 4.0 -) 2.0 |) 3.0 +)", "(END)"], True),
+
+        # Aninhamento com bool em operação aritmética → erro semântico
+        # (((1 2 <) 3 *) 4 +): (1 2 <) produz bool, bool * 3 é inválido
+        ("bool em aninhamento profundo -> ERRO",
+         ["(START)", "(((1 2 <) 3 *) 4 +)", "(END)"], False),
+    ]
+
+    aprovados = 0
+    reprovados = 0
+
+    for descricao, codigo, espera_valido in casos:
+        _, erros_decl, erros_tipo = auxAnalisarPrograma(codigo)
+        todos_erros = erros_decl + erros_tipo
+        teve_erro = len(todos_erros) > 0
+        passou = (espera_valido and not teve_erro) or (not espera_valido and teve_erro)
+
+        if passou:
+            aprovados += 1
+            status = "OK"
+        else:
+            reprovados += 1
+            status = "FALHOU"
+
+        print(f"{status} | {descricao}")
+        if not passou:
+            for erro in todos_erros:
+                print(f"       Erro inesperado: {erro.get('mensagem', '')}")
+
+    print(f"\nResultado: {aprovados} aprovados, {reprovados} reprovados")
+    print("=" * 50 + "\n")
+
+
 def iniciarTestesSemantico():
     """Executa todos os testes do analisador semantico (verificarTipos)."""
     print("\nRealizacao dos testes do analisador semantico:\n")
+    testarErrosLexicos()
+    testarErrosSintaticos()
+    testarComentarios()
+    testarCasosExtremos()
     testarLiteraisETiposBasicos()
     testarDivisaoInteiraEResto()
     testarBoolEmAritmetica()
