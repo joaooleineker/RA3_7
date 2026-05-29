@@ -5,6 +5,7 @@
 (3.5 2 /) *{ erro: divisao inteira utilizando numero real }*
 (10 2.0 %) *{ erro: resto com numero real }*
 (2 3 +)
+(5 3 <) *{ produz bool — demonstra o tipo logico }*
 (4.0 2.0 -)
 (8 2 *)
 (9.0 3.0 |)
