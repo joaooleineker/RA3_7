@@ -68,12 +68,10 @@ def decorarArvoreComLinhas(arvore, tokens):
 
     percorrer(arvore)
 
-
 def inferirTipoNumero(valor_texto):
     if "." in valor_texto:
         return "real"
     return "inteiro"
-
 
 def inferirTipoOperacao(operador, tipo_a, tipo_b):
     if operador in ("/", "%"):
@@ -85,7 +83,6 @@ def inferirTipoOperacao(operador, tipo_a, tipo_b):
             return "inteiro"
         return "real"
     return "real"
-
 
 def extrairComandosTopLevel(arvore):
     comandos = []
@@ -107,7 +104,6 @@ def extrairComandosTopLevel(arvore):
 
     percorrerLista(arvore)
     return comandos
-
 
 def detectarTipoComando(no_conteudo):
     producao = no_conteudo.get("producao_acionada", "")
@@ -192,7 +188,6 @@ def processarComandoSemantico(no_comando, tabela, erros, historico_resultados, r
 
     return tipo_resultado
 
-
 def processarWhile(no_conteudo, tabela, erros, historico_resultados):
     """
     Processa a estrutura semântica de um comando WHILE.
@@ -224,7 +219,6 @@ def processarWhile(no_conteudo, tabela, erros, historico_resultados):
     # Processa o corpo
     if cmd_corpo:
         processarComandoSemantico(cmd_corpo, tabela, erros, historico_resultados, registrar_historico=False)
-
 
 def processarIf(no_conteudo, tabela, erros, historico_resultados):
     """
@@ -270,7 +264,6 @@ def processarIf(no_conteudo, tabela, erros, historico_resultados):
     # Processa bloco else
     if cmd_else:
         processarComandoSemantico(cmd_else, tabela, erros, historico_resultados, registrar_historico=False)
-
 
 def processarComandoRegular(terminais, tabela, erros, historico_resultados):
     """
@@ -433,7 +426,6 @@ def salvarTabelaSimbolos(tabela, nome_arquivo="tabela_simbolos.md"):
     except Exception as e:
         print(f"Erro ao salvar tabela de símbolos: {e}")
 
-
 def salvarErrosSemanticos(erros, nome_arquivo="erros_semanticos.md"):
     """Salva a lista de erros semânticos em formato Markdown."""
     linhas = []
@@ -544,7 +536,6 @@ def verificarTipos(arvore_sintatica, tabela_simbolos):
 
     return erros_tipo
 
-
 def auxChecarTiposComando(no_comando, tabela, erros, historico, registrar_historico=True):
     """
     Despacha a verificação de tipos para o tipo correto de comando
@@ -584,7 +575,6 @@ def auxChecarTiposComando(no_comando, tabela, erros, historico, registrar_histor
             historico.append(tipo_resultado)
 
     return tipo_resultado
-
 
 def auxChecarTiposWhile(no_conteudo, tabela, erros, historico):
     """
@@ -635,7 +625,6 @@ def auxChecarTiposWhile(no_conteudo, tabela, erros, historico):
     # Processa o corpo sem registrar no histórico global
     if cmd_corpo:
         auxChecarTiposComando(cmd_corpo, tabela, erros, historico, registrar_historico=False)
-
 
 def auxChecarTiposIf(no_conteudo, tabela, erros, historico):
     """
@@ -698,7 +687,6 @@ def auxChecarTiposIf(no_conteudo, tabela, erros, historico):
         auxChecarTiposComando(cmd_then, tabela, erros, historico, registrar_historico=False)
     if cmd_else:
         auxChecarTiposComando(cmd_else, tabela, erros, historico, registrar_historico=False)
-
 
 def auxChecarTiposRegular(terminais, tabela, erros, historico):
     """
@@ -865,7 +853,6 @@ def auxChecarTiposRegular(terminais, tabela, erros, historico):
 
     return None
 
-
 def auxSalvarRelatorioTipos(erros_tipo, nome_arquivo="relatorio_tipos.md"):
     """Salva o relatório de erros semânticos de tipo em formato Markdown."""
     linhas = ["# Relatorio de Verificacao de Tipos\n"]
@@ -890,7 +877,6 @@ def auxSalvarRelatorioTipos(erros_tipo, nome_arquivo="relatorio_tipos.md"):
         print(f"Relatório de verificação de tipos salvo em '{nome_arquivo}'.")
     except Exception as erro_io:
         print(f"Erro ao salvar relatorio de tipos: {erro_io}")
-
 
 def copiarArvore(nodo):
     """
@@ -919,7 +905,6 @@ def gerarArvoreAtribuida(arvore_sintatica, tabela_simbolos):
     salvarArvoreAtribuida(arvore_atribuida)
 
     return arvore_atribuida
-
 
 def auxDecorarArvoreAtribuida(arvore, tabela):
     """
@@ -1034,7 +1019,6 @@ def auxDecorarArvoreAtribuida(arvore, tabela):
         for filho in arvore["nodos_filhos"]:
             auxDecorarArvoreAtribuida(filho, tabela)
 
-
 def salvarArvoreAtribuida(arvore_atribuida):
     """
     Exporta a árvore atribuída nos formatos JSON e Markdown.
@@ -1063,7 +1047,6 @@ def salvarArvoreAtribuida(arvore_atribuida):
 
     except Exception as erro_io:
         print(f"Erro ao salvar arquivos da árvore atribuída: {erro_io}")
-
 
 def construirTextoArvoreAtribuida(no, prefixo="", eh_ultimo=True, eh_raiz=True):
     """

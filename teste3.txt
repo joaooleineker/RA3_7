@@ -1,0 +1,20 @@
+(START)
+*{ teste3: programa com erros semanticos intencionais }*
+(5.0 BASE) *{ comentario no final da linha }*
+(BASE)
+(3.5 2 /) *{ erro: divisao inteira utilizando numero real }*
+(10 2.0 %) *{ erro: resto com numero real }*
+(2 3 +)
+(4.0 2.0 -)
+(8 2 *)
+(9.0 3.0 |)
+(2 4 ^)
+((BASE 1.0 +) *{ comentario no meio da expressao }* (2 3 *) |)
+(1 RES)
+(10 CONT)
+(CONT)
+((CONT) ((CONT 1 +) CONT) WHILE) *{ erro: condicao while eh inteiro, nao bool }*
+((BASE) (1 OK) (0 OK) IF) *{ erro: condicao if eh real, nao bool }*
+(1.5 CONT) *{ erro: CONT ja havia sido definido como inteiro }*
+(NAODECLARADA) *{ erro: memoria usada antes de ser definida }*
+(END)
