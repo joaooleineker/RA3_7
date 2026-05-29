@@ -1,0 +1,14 @@
+(START)
+*{ arquivo de teste: demonstra tratamento de erro sintatico }*
+*{ as linhas antes do erro sao validas }*
+(3 2 +) *{ soma — comentario no final }*
+(10 3 /)
+(10 3 %)
+(2.0 8 ^)
+(5.0 *{ comentario no meio }* VAR)
+(VAR)
+(10.0 5.0 -)
+(3 2) *{ erro sintatico: dois numeros sem operador }*
+(10.0 3.0 |)
+(2 8 *)
+(END)

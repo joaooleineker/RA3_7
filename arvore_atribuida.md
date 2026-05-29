@@ -1,141 +1,139 @@
-# Árvore Sintática (Derivação)
-
-## Resultado do .\teste1.txt:
+# Árvore Sintática Atribuída (Aumentada)
 
 ```text
 programa
 └── comando_lista
     ├── comando
     │   ├── ABRE_PAREN (()
-    │   ├── conteudo_comando
-    │   │   └── KEYWORD_START (START)
+    │   ├── conteudo_comando [tipo: void, cat: controle]
+    │   │   └── KEYWORD_START (START) [tipo: void, cat: controle]
     │   └── FECHA_PAREN ())
     └── comando_lista
         ├── comando
         │   ├── ABRE_PAREN (()
-        │   ├── conteudo_comando
-        │   │   ├── NUMERO (3.14)
+        │   ├── conteudo_comando [tipo: real, cat: expressao]
+        │   │   ├── NUMERO (3.14) [tipo: real, cat: literal]
         │   │   └── sufixo_numero
-        │   │       ├── NUMERO (2.0)
+        │   │       ├── NUMERO (2.0) [tipo: real, cat: literal]
         │   │       └── operador_final
-        │   │           └── OPERADOR (+)
+        │   │           └── OPERADOR (+) [tipo: real, cat: operador_aritmetico]
         │   └── FECHA_PAREN ())
         └── comando_lista
             ├── comando
             │   ├── ABRE_PAREN (()
-            │   ├── conteudo_comando
-            │   │   ├── NUMERO (10)
+            │   ├── conteudo_comando [tipo: inteiro, cat: expressao]
+            │   │   ├── NUMERO (10) [tipo: inteiro, cat: literal]
             │   │   └── sufixo_numero
-            │   │       ├── NUMERO (3)
+            │   │       ├── NUMERO (3) [tipo: inteiro, cat: literal]
             │   │       └── operador_final
-            │   │           └── OPERADOR (/)
+            │   │           └── OPERADOR (/) [tipo: inteiro, cat: operador_aritmetico]
             │   └── FECHA_PAREN ())
             └── comando_lista
                 ├── comando
                 │   ├── ABRE_PAREN (()
-                │   ├── conteudo_comando
-                │   │   ├── NUMERO (10)
+                │   ├── conteudo_comando [tipo: inteiro, cat: expressao]
+                │   │   ├── NUMERO (10) [tipo: inteiro, cat: literal]
                 │   │   └── sufixo_numero
-                │   │       ├── NUMERO (3)
+                │   │       ├── NUMERO (3) [tipo: inteiro, cat: literal]
                 │   │       └── operador_final
-                │   │           └── OPERADOR (%)
+                │   │           └── OPERADOR (%) [tipo: inteiro, cat: operador_aritmetico]
                 │   └── FECHA_PAREN ())
                 └── comando_lista
                     ├── comando
                     │   ├── ABRE_PAREN (()
-                    │   ├── conteudo_comando
-                    │   │   ├── NUMERO (2.0)
+                    │   ├── conteudo_comando [tipo: real, cat: expressao]
+                    │   │   ├── NUMERO (2.0) [tipo: real, cat: literal]
                     │   │   └── sufixo_numero
-                    │   │       ├── NUMERO (8)
+                    │   │       ├── NUMERO (8) [tipo: inteiro, cat: literal]
                     │   │       └── operador_final
-                    │   │           └── OPERADOR (^)
+                    │   │           └── OPERADOR (^) [tipo: real, cat: operador_aritmetico]
                     │   └── FECHA_PAREN ())
                     └── comando_lista
                         ├── comando
                         │   ├── ABRE_PAREN (()
-                        │   ├── conteudo_comando
-                        │   │   ├── NUMERO (2.0)
+                        │   ├── conteudo_comando [tipo: real, cat: expressao]
+                        │   │   ├── NUMERO (2.0) [tipo: real, cat: literal]
                         │   │   └── sufixo_numero
-                        │   │       ├── NUMERO (8)
+                        │   │       ├── NUMERO (8) [tipo: inteiro, cat: literal]
                         │   │       └── operador_final
-                        │   │           └── OPERADOR (*)
+                        │   │           └── OPERADOR (*) [tipo: real, cat: operador_aritmetico]
                         │   └── FECHA_PAREN ())
                         └── comando_lista
                             ├── comando
                             │   ├── ABRE_PAREN (()
-                            │   ├── conteudo_comando
-                            │   │   ├── NUMERO (10.0)
+                            │   ├── conteudo_comando [tipo: real, cat: expressao]
+                            │   │   ├── NUMERO (10.0) [tipo: real, cat: literal]
                             │   │   └── sufixo_numero
-                            │   │       ├── NUMERO (3.0)
+                            │   │       ├── NUMERO (3.0) [tipo: real, cat: literal]
                             │   │       └── operador_final
-                            │   │           └── OPERADOR (-)
+                            │   │           └── OPERADOR (-) [tipo: real, cat: operador_aritmetico]
                             │   └── FECHA_PAREN ())
                             └── comando_lista
                                 ├── comando
                                 │   ├── ABRE_PAREN (()
-                                │   ├── conteudo_comando
-                                │   │   ├── NUMERO (10.0)
+                                │   ├── conteudo_comando [tipo: real, cat: expressao]
+                                │   │   ├── NUMERO (10.0) [tipo: real, cat: literal]
                                 │   │   └── sufixo_numero
-                                │   │       ├── NUMERO (3.0)
+                                │   │       ├── NUMERO (3.0) [tipo: real, cat: literal]
                                 │   │       └── operador_final
-                                │   │           └── OPERADOR (|)
+                                │   │           └── OPERADOR (|) [tipo: real, cat: operador_aritmetico]
                                 │   └── FECHA_PAREN ())
                                 └── comando_lista
                                     ├── comando
                                     │   ├── ABRE_PAREN (()
-                                    │   ├── conteudo_comando
-                                    │   │   ├── NUMERO (1)
+                                    │   ├── conteudo_comando [tipo: real, cat: expressao]
+                                    │   │   ├── NUMERO (1) [tipo: inteiro, cat: literal]
                                     │   │   └── sufixo_numero
-                                    │   │       └── KEYWORD_RES (RES)
+                                    │   │       └── KEYWORD_RES (RES) [tipo: real, cat: historico_res]
                                     │   └── FECHA_PAREN ())
                                     └── comando_lista
                                         ├── comando
                                         │   ├── ABRE_PAREN (()
-                                        │   ├── conteudo_comando
-                                        │   │   ├── NUMERO (5.0)
+                                        │   ├── conteudo_comando [tipo: void, cat: expressao]
+                                        │   │   ├── NUMERO (5.0) [tipo: real, cat: literal]
                                         │   │   └── sufixo_numero
-                                        │   │       ├── MEMORIA (VAR)
+                                        │   │       ├── MEMORIA (VAR) [tipo: real, cat: var_store]
                                         │   │       └── apos_mem
-                                        │   │           └── ε ()
+                                        │   │           └── ε () [tipo: void, cat: pontuacao]
                                         │   └── FECHA_PAREN ())
                                         └── comando_lista
                                             ├── comando
                                             │   ├── ABRE_PAREN (()
-                                            │   ├── conteudo_comando
-                                            │   │   ├── MEMORIA (VAR)
+                                            │   ├── conteudo_comando [tipo: real, cat: expressao]
+                                            │   │   ├── MEMORIA (VAR) [tipo: real, cat: var_load]
                                             │   │   └── sufixo_memoria
-                                            │   │       └── ε ()
+                                            │   │       └── ε () [tipo: void, cat: pontuacao]
                                             │   └── FECHA_PAREN ())
                                             └── comando_lista
                                                 ├── comando
                                                 │   ├── ABRE_PAREN (()
-                                                │   ├── conteudo_comando
+                                                │   ├── conteudo_comando [tipo: void, cat: controle]
                                                 │   │   ├── comando
                                                 │   │   │   ├── ABRE_PAREN (()
-                                                │   │   │   ├── conteudo_comando
-                                                │   │   │   │   ├── MEMORIA (VAR)
+                                                │   │   │   ├── conteudo_comando [tipo: bool, cat: expressao]
+                                                │   │   │   │   ├── MEMORIA (VAR) [tipo: real, cat: var_load]
                                                 │   │   │   │   └── sufixo_memoria
-                                                │   │   │   │       ├── NUMERO (10.0)
+                                                │   │   │   │       ├── NUMERO (10.0) [tipo: real, cat: literal]
                                                 │   │   │   │       └── operador_final
-                                                │   │   │   │           └── OPERADOR_REL (<)
+                                                │   │   │   │           └── OPERADOR_REL (<) [tipo: bool, cat: operador_relacional]
                                                 │   │   │   └── FECHA_PAREN ())
                                                 │   │   └── sufixo_comando
                                                 │   │       ├── comando
                                                 │   │       │   ├── ABRE_PAREN (()
-                                                │   │       │   ├── conteudo_comando
+                                                │   │       │   ├── conteudo_comando [tipo: void, cat: expressao]
                                                 │   │       │   │   ├── comando
-                                                │   │       │   │   │   ├── ABRE_PAREN (()
+                                                │   │       │   │   │   ├── ABRE_PAREN (() [tipo: void, cat: pontuacao]
                                                 │   │       │   │   │   ├── conteudo_comando
-                                                │   │       │   │   │   │   ├── MEMORIA (VAR)
+                                                │   │       │   │   │   │   ├── MEMORIA (VAR) [tipo: real, cat: var_load]
                                                 │   │       │   │   │   │   └── sufixo_memoria
-                                                │   │       │   │   │   │       ├── NUMERO (1.0)
+                                                │   │       │   │   │   │       ├── NUMERO (1.0) [tipo: real, cat: literal]
                                                 │   │       │   │   │   │       └── operador_final
-                                                │   │       │   │   │   │           └── OPERADOR (+)
-                                                │   │       │   │   │   └── FECHA_PAREN ())
+                                                │   │       │   │   │   │           └── OPERADOR (+) [tipo: real, cat: operador_aritmetico]
+                                                │   │       │   │   │   └── FECHA_PAREN ()) [tipo: void, cat: pontuacao]
                                                 │   │       │   │   └── sufixo_comando
-                                                │   │       │   │       ├── MEMORIA (VAR)
+                                                │   │       │   │       ├── MEMORIA (VAR) [tipo: real, cat: var_store]
                                                 │   │       │   │       └── apos_mem
-                                                │   │       │   │           └── ε ()
+                                                │   │       │   │           └── ε () [tipo: void, cat: pontuacao]
                                                 │   │       │   └── FECHA_PAREN ())
                                                 │   │       └── apos_cmd
                                                 │   │           └── KEYWORD_WHILE (WHILE)
@@ -143,79 +141,79 @@ programa
                                                 └── comando_lista
                                                     ├── comando
                                                     │   ├── ABRE_PAREN (()
-                                                    │   ├── conteudo_comando
+                                                    │   ├── conteudo_comando [tipo: void, cat: controle]
                                                     │   │   ├── comando
                                                     │   │   │   ├── ABRE_PAREN (()
-                                                    │   │   │   ├── conteudo_comando
-                                                    │   │   │   │   ├── MEMORIA (VAR)
+                                                    │   │   │   ├── conteudo_comando [tipo: bool, cat: expressao]
+                                                    │   │   │   │   ├── MEMORIA (VAR) [tipo: real, cat: var_load]
                                                     │   │   │   │   └── sufixo_memoria
-                                                    │   │   │   │       ├── NUMERO (5.0)
+                                                    │   │   │   │       ├── NUMERO (5.0) [tipo: real, cat: literal]
                                                     │   │   │   │       └── operador_final
-                                                    │   │   │   │           └── OPERADOR_REL (>)
+                                                    │   │   │   │           └── OPERADOR_REL (>) [tipo: bool, cat: operador_relacional]
                                                     │   │   │   └── FECHA_PAREN ())
                                                     │   │   └── sufixo_comando
                                                     │   │       ├── comando
                                                     │   │       │   ├── ABRE_PAREN (()
-                                                    │   │       │   ├── conteudo_comando
-                                                    │   │       │   │   ├── NUMERO (1.0)
+                                                    │   │       │   ├── conteudo_comando [tipo: void, cat: expressao]
+                                                    │   │       │   │   ├── NUMERO (1.0) [tipo: real, cat: literal]
                                                     │   │       │   │   └── sufixo_numero
-                                                    │   │       │   │       ├── MEMORIA (RESULTADO)
+                                                    │   │       │   │       ├── MEMORIA (RESULTADO) [tipo: real, cat: var_store]
                                                     │   │       │   │       └── apos_mem
-                                                    │   │       │   │           └── ε ()
+                                                    │   │       │   │           └── ε () [tipo: void, cat: pontuacao]
                                                     │   │       │   └── FECHA_PAREN ())
                                                     │   │       └── apos_cmd
                                                     │   │           ├── comando
                                                     │   │           │   ├── ABRE_PAREN (()
-                                                    │   │           │   ├── conteudo_comando
-                                                    │   │           │   │   ├── NUMERO (0.0)
+                                                    │   │           │   ├── conteudo_comando [tipo: void, cat: expressao]
+                                                    │   │           │   │   ├── NUMERO (0.0) [tipo: real, cat: literal]
                                                     │   │           │   │   └── sufixo_numero
-                                                    │   │           │   │       ├── MEMORIA (RESULTADO)
+                                                    │   │           │   │       ├── MEMORIA (RESULTADO) [tipo: real, cat: var_store]
                                                     │   │           │   │       └── apos_mem
-                                                    │   │           │   │           └── ε ()
+                                                    │   │           │   │           └── ε () [tipo: void, cat: pontuacao]
                                                     │   │           │   └── FECHA_PAREN ())
                                                     │   │           └── KEYWORD_IF (IF)
                                                     │   └── FECHA_PAREN ())
                                                     └── comando_lista
                                                         ├── comando
                                                         │   ├── ABRE_PAREN (()
-                                                        │   ├── conteudo_comando
-                                                        │   │   ├── MEMORIA (VAR)
+                                                        │   ├── conteudo_comando [tipo: real, cat: expressao]
+                                                        │   │   ├── MEMORIA (VAR) [tipo: real, cat: var_load]
                                                         │   │   └── sufixo_memoria
-                                                        │   │       └── ε ()
+                                                        │   │       └── ε () [tipo: void, cat: pontuacao]
                                                         │   └── FECHA_PAREN ())
                                                         └── comando_lista
                                                             ├── comando
                                                             │   ├── ABRE_PAREN (()
-                                                            │   ├── conteudo_comando
-                                                            │   │   ├── NUMERO (5.0)
+                                                            │   ├── conteudo_comando [tipo: void, cat: expressao]
+                                                            │   │   ├── NUMERO (5.0) [tipo: real, cat: literal]
                                                             │   │   └── sufixo_numero
-                                                            │   │       ├── MEMORIA (MEM)
+                                                            │   │       ├── MEMORIA (MEM) [tipo: real, cat: var_store]
                                                             │   │       └── apos_mem
-                                                            │   │           └── ε ()
+                                                            │   │           └── ε () [tipo: void, cat: pontuacao]
                                                             │   └── FECHA_PAREN ())
                                                             └── comando_lista
                                                                 ├── comando
                                                                 │   ├── ABRE_PAREN (()
-                                                                │   ├── conteudo_comando
-                                                                │   │   ├── NUMERO (10.0)
+                                                                │   ├── conteudo_comando [tipo: void, cat: expressao]
+                                                                │   │   ├── NUMERO (10.0) [tipo: real, cat: literal]
                                                                 │   │   └── sufixo_numero
-                                                                │   │       ├── MEMORIA (MEM)
+                                                                │   │       ├── MEMORIA (MEM) [tipo: real, cat: var_store]
                                                                 │   │       └── apos_mem
-                                                                │   │           └── ε ()
+                                                                │   │           └── ε () [tipo: void, cat: pontuacao]
                                                                 │   └── FECHA_PAREN ())
                                                                 └── comando_lista
                                                                     ├── comando
                                                                     │   ├── ABRE_PAREN (()
-                                                                    │   ├── conteudo_comando
-                                                                    │   │   ├── MEMORIA (MEM)
+                                                                    │   ├── conteudo_comando [tipo: real, cat: expressao]
+                                                                    │   │   ├── MEMORIA (MEM) [tipo: real, cat: var_load]
                                                                     │   │   └── sufixo_memoria
-                                                                    │   │       └── ε ()
+                                                                    │   │       └── ε () [tipo: void, cat: pontuacao]
                                                                     │   └── FECHA_PAREN ())
                                                                     └── comando_lista
                                                                         ├── comando
                                                                         │   ├── ABRE_PAREN (()
-                                                                        │   ├── conteudo_comando
-                                                                        │   │   └── KEYWORD_END (END)
+                                                                        │   ├── conteudo_comando [tipo: void, cat: controle]
+                                                                        │   │   └── KEYWORD_END (END) [tipo: void, cat: controle]
                                                                         │   └── FECHA_PAREN ())
                                                                         └── comando_lista
                                                                             └── ε ()

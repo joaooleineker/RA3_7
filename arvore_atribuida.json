@@ -12,7 +12,8 @@
                     "nodos_filhos": [
                         {
                             "terminal_folha": "ABRE_PAREN",
-                            "valor_extraido": "("
+                            "valor_extraido": "(",
+                            "linha": 1
                         },
                         {
                             "nodo_pai": "conteudo_comando",
@@ -20,13 +21,21 @@
                             "nodos_filhos": [
                                 {
                                     "terminal_folha": "KEYWORD_START",
-                                    "valor_extraido": "START"
+                                    "valor_extraido": "START",
+                                    "linha": 1,
+                                    "tipo": "void",
+                                    "categoria_semantica": "controle",
+                                    "info_assembly": "NOP"
                                 }
-                            ]
+                            ],
+                            "tipo": "void",
+                            "categoria_semantica": "controle",
+                            "info_assembly": "NOP"
                         },
                         {
                             "terminal_folha": "FECHA_PAREN",
-                            "valor_extraido": ")"
+                            "valor_extraido": ")",
+                            "linha": 1
                         }
                     ]
                 },
@@ -40,7 +49,8 @@
                             "nodos_filhos": [
                                 {
                                     "terminal_folha": "ABRE_PAREN",
-                                    "valor_extraido": "("
+                                    "valor_extraido": "(",
+                                    "linha": 2
                                 },
                                 {
                                     "nodo_pai": "conteudo_comando",
@@ -48,7 +58,12 @@
                                     "nodos_filhos": [
                                         {
                                             "terminal_folha": "NUMERO",
-                                            "valor_extraido": "3.14"
+                                            "valor_extraido": "3.14",
+                                            "linha": 2,
+                                            "tipo_inferido": "real",
+                                            "tipo": "real",
+                                            "categoria_semantica": "literal",
+                                            "info_assembly": "LDR R0, =3.14"
                                         },
                                         {
                                             "nodo_pai": "sufixo_numero",
@@ -56,7 +71,12 @@
                                             "nodos_filhos": [
                                                 {
                                                     "terminal_folha": "NUMERO",
-                                                    "valor_extraido": "2.0"
+                                                    "valor_extraido": "2.0",
+                                                    "linha": 2,
+                                                    "tipo_inferido": "real",
+                                                    "tipo": "real",
+                                                    "categoria_semantica": "literal",
+                                                    "info_assembly": "LDR R0, =2.0"
                                                 },
                                                 {
                                                     "nodo_pai": "operador_final",
@@ -64,17 +84,26 @@
                                                     "nodos_filhos": [
                                                         {
                                                             "terminal_folha": "OPERADOR",
-                                                            "valor_extraido": "+"
+                                                            "valor_extraido": "+",
+                                                            "linha": 2,
+                                                            "tipo_inferido": "real",
+                                                            "tipo": "real",
+                                                            "categoria_semantica": "operador_aritmetico",
+                                                            "info_assembly": "OP_ARITMETICA +"
                                                         }
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ]
+                                    ],
+                                    "tipo_resultado": "real",
+                                    "tipo": "real",
+                                    "categoria_semantica": "expressao"
                                 },
                                 {
                                     "terminal_folha": "FECHA_PAREN",
-                                    "valor_extraido": ")"
+                                    "valor_extraido": ")",
+                                    "linha": 2
                                 }
                             ]
                         },
@@ -88,7 +117,8 @@
                                     "nodos_filhos": [
                                         {
                                             "terminal_folha": "ABRE_PAREN",
-                                            "valor_extraido": "("
+                                            "valor_extraido": "(",
+                                            "linha": 3
                                         },
                                         {
                                             "nodo_pai": "conteudo_comando",
@@ -96,7 +126,12 @@
                                             "nodos_filhos": [
                                                 {
                                                     "terminal_folha": "NUMERO",
-                                                    "valor_extraido": "10"
+                                                    "valor_extraido": "10",
+                                                    "linha": 3,
+                                                    "tipo_inferido": "inteiro",
+                                                    "tipo": "inteiro",
+                                                    "categoria_semantica": "literal",
+                                                    "info_assembly": "LDR R0, =10"
                                                 },
                                                 {
                                                     "nodo_pai": "sufixo_numero",
@@ -104,7 +139,12 @@
                                                     "nodos_filhos": [
                                                         {
                                                             "terminal_folha": "NUMERO",
-                                                            "valor_extraido": "3"
+                                                            "valor_extraido": "3",
+                                                            "linha": 3,
+                                                            "tipo_inferido": "inteiro",
+                                                            "tipo": "inteiro",
+                                                            "categoria_semantica": "literal",
+                                                            "info_assembly": "LDR R0, =3"
                                                         },
                                                         {
                                                             "nodo_pai": "operador_final",
@@ -112,17 +152,26 @@
                                                             "nodos_filhos": [
                                                                 {
                                                                     "terminal_folha": "OPERADOR",
-                                                                    "valor_extraido": "/"
+                                                                    "valor_extraido": "/",
+                                                                    "linha": 3,
+                                                                    "tipo_inferido": "inteiro",
+                                                                    "tipo": "inteiro",
+                                                                    "categoria_semantica": "operador_aritmetico",
+                                                                    "info_assembly": "OP_ARITMETICA /"
                                                                 }
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ]
+                                            ],
+                                            "tipo_resultado": "inteiro",
+                                            "tipo": "inteiro",
+                                            "categoria_semantica": "expressao"
                                         },
                                         {
                                             "terminal_folha": "FECHA_PAREN",
-                                            "valor_extraido": ")"
+                                            "valor_extraido": ")",
+                                            "linha": 3
                                         }
                                     ]
                                 },
@@ -136,7 +185,8 @@
                                             "nodos_filhos": [
                                                 {
                                                     "terminal_folha": "ABRE_PAREN",
-                                                    "valor_extraido": "("
+                                                    "valor_extraido": "(",
+                                                    "linha": 4
                                                 },
                                                 {
                                                     "nodo_pai": "conteudo_comando",
@@ -144,7 +194,12 @@
                                                     "nodos_filhos": [
                                                         {
                                                             "terminal_folha": "NUMERO",
-                                                            "valor_extraido": "10"
+                                                            "valor_extraido": "10",
+                                                            "linha": 4,
+                                                            "tipo_inferido": "inteiro",
+                                                            "tipo": "inteiro",
+                                                            "categoria_semantica": "literal",
+                                                            "info_assembly": "LDR R0, =10"
                                                         },
                                                         {
                                                             "nodo_pai": "sufixo_numero",
@@ -152,7 +207,12 @@
                                                             "nodos_filhos": [
                                                                 {
                                                                     "terminal_folha": "NUMERO",
-                                                                    "valor_extraido": "3"
+                                                                    "valor_extraido": "3",
+                                                                    "linha": 4,
+                                                                    "tipo_inferido": "inteiro",
+                                                                    "tipo": "inteiro",
+                                                                    "categoria_semantica": "literal",
+                                                                    "info_assembly": "LDR R0, =3"
                                                                 },
                                                                 {
                                                                     "nodo_pai": "operador_final",
@@ -160,17 +220,26 @@
                                                                     "nodos_filhos": [
                                                                         {
                                                                             "terminal_folha": "OPERADOR",
-                                                                            "valor_extraido": "%"
+                                                                            "valor_extraido": "%",
+                                                                            "linha": 4,
+                                                                            "tipo_inferido": "inteiro",
+                                                                            "tipo": "inteiro",
+                                                                            "categoria_semantica": "operador_aritmetico",
+                                                                            "info_assembly": "OP_ARITMETICA %"
                                                                         }
                                                                     ]
                                                                 }
                                                             ]
                                                         }
-                                                    ]
+                                                    ],
+                                                    "tipo_resultado": "inteiro",
+                                                    "tipo": "inteiro",
+                                                    "categoria_semantica": "expressao"
                                                 },
                                                 {
                                                     "terminal_folha": "FECHA_PAREN",
-                                                    "valor_extraido": ")"
+                                                    "valor_extraido": ")",
+                                                    "linha": 4
                                                 }
                                             ]
                                         },
@@ -184,7 +253,8 @@
                                                     "nodos_filhos": [
                                                         {
                                                             "terminal_folha": "ABRE_PAREN",
-                                                            "valor_extraido": "("
+                                                            "valor_extraido": "(",
+                                                            "linha": 5
                                                         },
                                                         {
                                                             "nodo_pai": "conteudo_comando",
@@ -192,7 +262,12 @@
                                                             "nodos_filhos": [
                                                                 {
                                                                     "terminal_folha": "NUMERO",
-                                                                    "valor_extraido": "2.0"
+                                                                    "valor_extraido": "2.0",
+                                                                    "linha": 5,
+                                                                    "tipo_inferido": "real",
+                                                                    "tipo": "real",
+                                                                    "categoria_semantica": "literal",
+                                                                    "info_assembly": "LDR R0, =2.0"
                                                                 },
                                                                 {
                                                                     "nodo_pai": "sufixo_numero",
@@ -200,7 +275,12 @@
                                                                     "nodos_filhos": [
                                                                         {
                                                                             "terminal_folha": "NUMERO",
-                                                                            "valor_extraido": "8"
+                                                                            "valor_extraido": "8",
+                                                                            "linha": 5,
+                                                                            "tipo_inferido": "inteiro",
+                                                                            "tipo": "inteiro",
+                                                                            "categoria_semantica": "literal",
+                                                                            "info_assembly": "LDR R0, =8"
                                                                         },
                                                                         {
                                                                             "nodo_pai": "operador_final",
@@ -208,17 +288,26 @@
                                                                             "nodos_filhos": [
                                                                                 {
                                                                                     "terminal_folha": "OPERADOR",
-                                                                                    "valor_extraido": "^"
+                                                                                    "valor_extraido": "^",
+                                                                                    "linha": 5,
+                                                                                    "tipo_inferido": "real",
+                                                                                    "tipo": "real",
+                                                                                    "categoria_semantica": "operador_aritmetico",
+                                                                                    "info_assembly": "OP_ARITMETICA ^"
                                                                                 }
                                                                             ]
                                                                         }
                                                                     ]
                                                                 }
-                                                            ]
+                                                            ],
+                                                            "tipo_resultado": "real",
+                                                            "tipo": "real",
+                                                            "categoria_semantica": "expressao"
                                                         },
                                                         {
                                                             "terminal_folha": "FECHA_PAREN",
-                                                            "valor_extraido": ")"
+                                                            "valor_extraido": ")",
+                                                            "linha": 5
                                                         }
                                                     ]
                                                 },
@@ -232,7 +321,8 @@
                                                             "nodos_filhos": [
                                                                 {
                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                    "valor_extraido": "("
+                                                                    "valor_extraido": "(",
+                                                                    "linha": 6
                                                                 },
                                                                 {
                                                                     "nodo_pai": "conteudo_comando",
@@ -240,7 +330,12 @@
                                                                     "nodos_filhos": [
                                                                         {
                                                                             "terminal_folha": "NUMERO",
-                                                                            "valor_extraido": "2.0"
+                                                                            "valor_extraido": "2.0",
+                                                                            "linha": 6,
+                                                                            "tipo_inferido": "real",
+                                                                            "tipo": "real",
+                                                                            "categoria_semantica": "literal",
+                                                                            "info_assembly": "LDR R0, =2.0"
                                                                         },
                                                                         {
                                                                             "nodo_pai": "sufixo_numero",
@@ -248,7 +343,12 @@
                                                                             "nodos_filhos": [
                                                                                 {
                                                                                     "terminal_folha": "NUMERO",
-                                                                                    "valor_extraido": "8"
+                                                                                    "valor_extraido": "8",
+                                                                                    "linha": 6,
+                                                                                    "tipo_inferido": "inteiro",
+                                                                                    "tipo": "inteiro",
+                                                                                    "categoria_semantica": "literal",
+                                                                                    "info_assembly": "LDR R0, =8"
                                                                                 },
                                                                                 {
                                                                                     "nodo_pai": "operador_final",
@@ -256,17 +356,26 @@
                                                                                     "nodos_filhos": [
                                                                                         {
                                                                                             "terminal_folha": "OPERADOR",
-                                                                                            "valor_extraido": "*"
+                                                                                            "valor_extraido": "*",
+                                                                                            "linha": 6,
+                                                                                            "tipo_inferido": "real",
+                                                                                            "tipo": "real",
+                                                                                            "categoria_semantica": "operador_aritmetico",
+                                                                                            "info_assembly": "OP_ARITMETICA *"
                                                                                         }
                                                                                     ]
                                                                                 }
                                                                             ]
                                                                         }
-                                                                    ]
+                                                                    ],
+                                                                    "tipo_resultado": "real",
+                                                                    "tipo": "real",
+                                                                    "categoria_semantica": "expressao"
                                                                 },
                                                                 {
                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                    "valor_extraido": ")"
+                                                                    "valor_extraido": ")",
+                                                                    "linha": 6
                                                                 }
                                                             ]
                                                         },
@@ -280,7 +389,8 @@
                                                                     "nodos_filhos": [
                                                                         {
                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                            "valor_extraido": "("
+                                                                            "valor_extraido": "(",
+                                                                            "linha": 7
                                                                         },
                                                                         {
                                                                             "nodo_pai": "conteudo_comando",
@@ -288,7 +398,12 @@
                                                                             "nodos_filhos": [
                                                                                 {
                                                                                     "terminal_folha": "NUMERO",
-                                                                                    "valor_extraido": "10.0"
+                                                                                    "valor_extraido": "10.0",
+                                                                                    "linha": 7,
+                                                                                    "tipo_inferido": "real",
+                                                                                    "tipo": "real",
+                                                                                    "categoria_semantica": "literal",
+                                                                                    "info_assembly": "LDR R0, =10.0"
                                                                                 },
                                                                                 {
                                                                                     "nodo_pai": "sufixo_numero",
@@ -296,7 +411,12 @@
                                                                                     "nodos_filhos": [
                                                                                         {
                                                                                             "terminal_folha": "NUMERO",
-                                                                                            "valor_extraido": "3.0"
+                                                                                            "valor_extraido": "3.0",
+                                                                                            "linha": 7,
+                                                                                            "tipo_inferido": "real",
+                                                                                            "tipo": "real",
+                                                                                            "categoria_semantica": "literal",
+                                                                                            "info_assembly": "LDR R0, =3.0"
                                                                                         },
                                                                                         {
                                                                                             "nodo_pai": "operador_final",
@@ -304,17 +424,26 @@
                                                                                             "nodos_filhos": [
                                                                                                 {
                                                                                                     "terminal_folha": "OPERADOR",
-                                                                                                    "valor_extraido": "-"
+                                                                                                    "valor_extraido": "-",
+                                                                                                    "linha": 7,
+                                                                                                    "tipo_inferido": "real",
+                                                                                                    "tipo": "real",
+                                                                                                    "categoria_semantica": "operador_aritmetico",
+                                                                                                    "info_assembly": "OP_ARITMETICA -"
                                                                                                 }
                                                                                             ]
                                                                                         }
                                                                                     ]
                                                                                 }
-                                                                            ]
+                                                                            ],
+                                                                            "tipo_resultado": "real",
+                                                                            "tipo": "real",
+                                                                            "categoria_semantica": "expressao"
                                                                         },
                                                                         {
                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                            "valor_extraido": ")"
+                                                                            "valor_extraido": ")",
+                                                                            "linha": 7
                                                                         }
                                                                     ]
                                                                 },
@@ -328,7 +457,8 @@
                                                                             "nodos_filhos": [
                                                                                 {
                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                    "valor_extraido": "("
+                                                                                    "valor_extraido": "(",
+                                                                                    "linha": 8
                                                                                 },
                                                                                 {
                                                                                     "nodo_pai": "conteudo_comando",
@@ -336,7 +466,12 @@
                                                                                     "nodos_filhos": [
                                                                                         {
                                                                                             "terminal_folha": "NUMERO",
-                                                                                            "valor_extraido": "10.0"
+                                                                                            "valor_extraido": "10.0",
+                                                                                            "linha": 8,
+                                                                                            "tipo_inferido": "real",
+                                                                                            "tipo": "real",
+                                                                                            "categoria_semantica": "literal",
+                                                                                            "info_assembly": "LDR R0, =10.0"
                                                                                         },
                                                                                         {
                                                                                             "nodo_pai": "sufixo_numero",
@@ -344,7 +479,12 @@
                                                                                             "nodos_filhos": [
                                                                                                 {
                                                                                                     "terminal_folha": "NUMERO",
-                                                                                                    "valor_extraido": "3.0"
+                                                                                                    "valor_extraido": "3.0",
+                                                                                                    "linha": 8,
+                                                                                                    "tipo_inferido": "real",
+                                                                                                    "tipo": "real",
+                                                                                                    "categoria_semantica": "literal",
+                                                                                                    "info_assembly": "LDR R0, =3.0"
                                                                                                 },
                                                                                                 {
                                                                                                     "nodo_pai": "operador_final",
@@ -352,17 +492,26 @@
                                                                                                     "nodos_filhos": [
                                                                                                         {
                                                                                                             "terminal_folha": "OPERADOR",
-                                                                                                            "valor_extraido": "|"
+                                                                                                            "valor_extraido": "|",
+                                                                                                            "linha": 8,
+                                                                                                            "tipo_inferido": "real",
+                                                                                                            "tipo": "real",
+                                                                                                            "categoria_semantica": "operador_aritmetico",
+                                                                                                            "info_assembly": "OP_ARITMETICA |"
                                                                                                         }
                                                                                                     ]
                                                                                                 }
                                                                                             ]
                                                                                         }
-                                                                                    ]
+                                                                                    ],
+                                                                                    "tipo_resultado": "real",
+                                                                                    "tipo": "real",
+                                                                                    "categoria_semantica": "expressao"
                                                                                 },
                                                                                 {
                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                    "valor_extraido": ")"
+                                                                                    "valor_extraido": ")",
+                                                                                    "linha": 8
                                                                                 }
                                                                             ]
                                                                         },
@@ -376,7 +525,8 @@
                                                                                     "nodos_filhos": [
                                                                                         {
                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                            "valor_extraido": "("
+                                                                                            "valor_extraido": "(",
+                                                                                            "linha": 9
                                                                                         },
                                                                                         {
                                                                                             "nodo_pai": "conteudo_comando",
@@ -384,7 +534,12 @@
                                                                                             "nodos_filhos": [
                                                                                                 {
                                                                                                     "terminal_folha": "NUMERO",
-                                                                                                    "valor_extraido": "1"
+                                                                                                    "valor_extraido": "1",
+                                                                                                    "linha": 9,
+                                                                                                    "tipo_inferido": "inteiro",
+                                                                                                    "tipo": "inteiro",
+                                                                                                    "categoria_semantica": "literal",
+                                                                                                    "info_assembly": "LDR R0, =1"
                                                                                                 },
                                                                                                 {
                                                                                                     "nodo_pai": "sufixo_numero",
@@ -392,15 +547,24 @@
                                                                                                     "nodos_filhos": [
                                                                                                         {
                                                                                                             "terminal_folha": "KEYWORD_RES",
-                                                                                                            "valor_extraido": "RES"
+                                                                                                            "valor_extraido": "RES",
+                                                                                                            "linha": 9,
+                                                                                                            "tipo_inferido": "real",
+                                                                                                            "tipo": "real",
+                                                                                                            "categoria_semantica": "historico_res",
+                                                                                                            "info_assembly": "LDR R0, [HISTORICO]"
                                                                                                         }
                                                                                                     ]
                                                                                                 }
-                                                                                            ]
+                                                                                            ],
+                                                                                            "tipo_resultado": "real",
+                                                                                            "tipo": "real",
+                                                                                            "categoria_semantica": "expressao"
                                                                                         },
                                                                                         {
                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                            "valor_extraido": ")"
+                                                                                            "valor_extraido": ")",
+                                                                                            "linha": 9
                                                                                         }
                                                                                     ]
                                                                                 },
@@ -414,7 +578,8 @@
                                                                                             "nodos_filhos": [
                                                                                                 {
                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                    "valor_extraido": "("
+                                                                                                    "valor_extraido": "(",
+                                                                                                    "linha": 10
                                                                                                 },
                                                                                                 {
                                                                                                     "nodo_pai": "conteudo_comando",
@@ -422,7 +587,12 @@
                                                                                                     "nodos_filhos": [
                                                                                                         {
                                                                                                             "terminal_folha": "NUMERO",
-                                                                                                            "valor_extraido": "5.0"
+                                                                                                            "valor_extraido": "5.0",
+                                                                                                            "linha": 10,
+                                                                                                            "tipo_inferido": "real",
+                                                                                                            "tipo": "real",
+                                                                                                            "categoria_semantica": "literal",
+                                                                                                            "info_assembly": "LDR R0, =5.0"
                                                                                                         },
                                                                                                         {
                                                                                                             "nodo_pai": "sufixo_numero",
@@ -430,24 +600,36 @@
                                                                                                             "nodos_filhos": [
                                                                                                                 {
                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                    "valor_extraido": "VAR",
+                                                                                                                    "linha": 10,
+                                                                                                                    "tipo_inferido": "real",
+                                                                                                                    "tipo": "real",
+                                                                                                                    "categoria_semantica": "var_store",
+                                                                                                                    "info_assembly": "STR R0, [VAR]"
                                                                                                                 },
                                                                                                                 {
                                                                                                                     "nodo_pai": "apos_mem",
                                                                                                                     "producao_acionada": "ε",
                                                                                                                     "nodos_filhos": [
                                                                                                                         {
-                                                                                                                            "terminal_folha": "ε"
+                                                                                                                            "terminal_folha": "ε",
+                                                                                                                            "linha": -1,
+                                                                                                                            "tipo": "void",
+                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                         }
                                                                                                                     ]
                                                                                                                 }
                                                                                                             ]
                                                                                                         }
-                                                                                                    ]
+                                                                                                    ],
+                                                                                                    "tipo": "void",
+                                                                                                    "categoria_semantica": "expressao"
                                                                                                 },
                                                                                                 {
                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                    "valor_extraido": ")"
+                                                                                                    "valor_extraido": ")",
+                                                                                                    "linha": 10
                                                                                                 }
                                                                                             ]
                                                                                         },
@@ -461,7 +643,8 @@
                                                                                                     "nodos_filhos": [
                                                                                                         {
                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                            "valor_extraido": "("
+                                                                                                            "valor_extraido": "(",
+                                                                                                            "linha": 11
                                                                                                         },
                                                                                                         {
                                                                                                             "nodo_pai": "conteudo_comando",
@@ -469,22 +652,35 @@
                                                                                                             "nodos_filhos": [
                                                                                                                 {
                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                    "valor_extraido": "VAR",
+                                                                                                                    "linha": 11,
+                                                                                                                    "tipo_inferido": "real",
+                                                                                                                    "tipo": "real",
+                                                                                                                    "categoria_semantica": "var_load",
+                                                                                                                    "info_assembly": "LDR R0, [VAR]"
                                                                                                                 },
                                                                                                                 {
                                                                                                                     "nodo_pai": "sufixo_memoria",
                                                                                                                     "producao_acionada": "ε",
                                                                                                                     "nodos_filhos": [
                                                                                                                         {
-                                                                                                                            "terminal_folha": "ε"
+                                                                                                                            "terminal_folha": "ε",
+                                                                                                                            "linha": -1,
+                                                                                                                            "tipo": "void",
+                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                         }
                                                                                                                     ]
                                                                                                                 }
-                                                                                                            ]
+                                                                                                            ],
+                                                                                                            "tipo_resultado": "real",
+                                                                                                            "tipo": "real",
+                                                                                                            "categoria_semantica": "expressao"
                                                                                                         },
                                                                                                         {
                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                            "valor_extraido": ")"
+                                                                                                            "valor_extraido": ")",
+                                                                                                            "linha": 11
                                                                                                         }
                                                                                                     ]
                                                                                                 },
@@ -498,7 +694,8 @@
                                                                                                             "nodos_filhos": [
                                                                                                                 {
                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                    "valor_extraido": "("
+                                                                                                                    "valor_extraido": "(",
+                                                                                                                    "linha": 12
                                                                                                                 },
                                                                                                                 {
                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -510,7 +707,8 @@
                                                                                                                             "nodos_filhos": [
                                                                                                                                 {
                                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                                    "valor_extraido": "("
+                                                                                                                                    "valor_extraido": "(",
+                                                                                                                                    "linha": 12
                                                                                                                                 },
                                                                                                                                 {
                                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -518,7 +716,12 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "MEMORIA",
-                                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                                            "valor_extraido": "VAR",
+                                                                                                                                            "linha": 12,
+                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                            "tipo": "real",
+                                                                                                                                            "categoria_semantica": "var_load",
+                                                                                                                                            "info_assembly": "LDR R0, [VAR]"
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "nodo_pai": "sufixo_memoria",
@@ -526,7 +729,12 @@
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "NUMERO",
-                                                                                                                                                    "valor_extraido": "10.0"
+                                                                                                                                                    "valor_extraido": "10.0",
+                                                                                                                                                    "linha": 12,
+                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                    "tipo": "real",
+                                                                                                                                                    "categoria_semantica": "literal",
+                                                                                                                                                    "info_assembly": "LDR R0, =10.0"
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "nodo_pai": "operador_final",
@@ -534,17 +742,26 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "OPERADOR_REL",
-                                                                                                                                                            "valor_extraido": "<"
+                                                                                                                                                            "valor_extraido": "<",
+                                                                                                                                                            "linha": 12,
+                                                                                                                                                            "tipo_inferido": "bool",
+                                                                                                                                                            "tipo": "bool",
+                                                                                                                                                            "categoria_semantica": "operador_relacional",
+                                                                                                                                                            "info_assembly": "OP_RELACIONAL <"
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         }
-                                                                                                                                    ]
+                                                                                                                                    ],
+                                                                                                                                    "tipo_resultado": "bool",
+                                                                                                                                    "tipo": "bool",
+                                                                                                                                    "categoria_semantica": "expressao"
                                                                                                                                 },
                                                                                                                                 {
                                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                    "valor_extraido": ")",
+                                                                                                                                    "linha": 12
                                                                                                                                 }
                                                                                                                             ]
                                                                                                                         },
@@ -558,7 +775,8 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                            "valor_extraido": "("
+                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                            "linha": 12
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -570,7 +788,11 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                            "valor_extraido": "("
+                                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                                            "linha": 12,
+                                                                                                                                                            "tipo": "void",
+                                                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -578,7 +800,12 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                                                                    "valor_extraido": "VAR",
+                                                                                                                                                                    "linha": 12,
+                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                    "categoria_semantica": "var_load",
+                                                                                                                                                                    "info_assembly": "LDR R0, [VAR]"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "sufixo_memoria",
@@ -586,7 +813,12 @@
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
                                                                                                                                                                             "terminal_folha": "NUMERO",
-                                                                                                                                                                            "valor_extraido": "1.0"
+                                                                                                                                                                            "valor_extraido": "1.0",
+                                                                                                                                                                            "linha": 12,
+                                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                                            "tipo": "real",
+                                                                                                                                                                            "categoria_semantica": "literal",
+                                                                                                                                                                            "info_assembly": "LDR R0, =1.0"
                                                                                                                                                                         },
                                                                                                                                                                         {
                                                                                                                                                                             "nodo_pai": "operador_final",
@@ -594,7 +826,12 @@
                                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                                 {
                                                                                                                                                                                     "terminal_folha": "OPERADOR",
-                                                                                                                                                                                    "valor_extraido": "+"
+                                                                                                                                                                                    "valor_extraido": "+",
+                                                                                                                                                                                    "linha": 12,
+                                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                                    "categoria_semantica": "operador_aritmetico",
+                                                                                                                                                                                    "info_assembly": "OP_ARITMETICA +"
                                                                                                                                                                                 }
                                                                                                                                                                             ]
                                                                                                                                                                         }
@@ -604,7 +841,11 @@
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                                            "linha": 12,
+                                                                                                                                                            "tipo": "void",
+                                                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 },
@@ -614,24 +855,36 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "MEMORIA",
-                                                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                                                            "valor_extraido": "VAR",
+                                                                                                                                                            "linha": 12,
+                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "var_store",
+                                                                                                                                                            "info_assembly": "STR R0, [VAR]"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "apos_mem",
                                                                                                                                                             "producao_acionada": "ε",
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
-                                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                                    "terminal_folha": "ε",
+                                                                                                                                                                    "linha": -1,
+                                                                                                                                                                    "tipo": "void",
+                                                                                                                                                                    "categoria_semantica": "pontuacao",
+                                                                                                                                                                    "info_assembly": "NENHUM"
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 }
-                                                                                                                                            ]
+                                                                                                                                            ],
+                                                                                                                                            "tipo": "void",
+                                                                                                                                            "categoria_semantica": "expressao"
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                            "linha": 12
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 },
@@ -641,17 +894,22 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "KEYWORD_WHILE",
-                                                                                                                                            "valor_extraido": "WHILE"
+                                                                                                                                            "valor_extraido": "WHILE",
+                                                                                                                                            "linha": 12
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 }
                                                                                                                             ]
                                                                                                                         }
-                                                                                                                    ]
+                                                                                                                    ],
+                                                                                                                    "tipo": "void",
+                                                                                                                    "categoria_semantica": "controle",
+                                                                                                                    "info_assembly": "DESVIO_CONDICIONAL"
                                                                                                                 },
                                                                                                                 {
                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                    "valor_extraido": ")"
+                                                                                                                    "valor_extraido": ")",
+                                                                                                                    "linha": 12
                                                                                                                 }
                                                                                                             ]
                                                                                                         },
@@ -665,7 +923,8 @@
                                                                                                                     "nodos_filhos": [
                                                                                                                         {
                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                            "valor_extraido": "("
+                                                                                                                            "valor_extraido": "(",
+                                                                                                                            "linha": 13
                                                                                                                         },
                                                                                                                         {
                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -677,7 +936,8 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                            "valor_extraido": "("
+                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                            "linha": 13
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -685,7 +945,12 @@
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                                                    "valor_extraido": "VAR"
+                                                                                                                                                    "valor_extraido": "VAR",
+                                                                                                                                                    "linha": 13,
+                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                    "tipo": "real",
+                                                                                                                                                    "categoria_semantica": "var_load",
+                                                                                                                                                    "info_assembly": "LDR R0, [VAR]"
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "nodo_pai": "sufixo_memoria",
@@ -693,7 +958,12 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "NUMERO",
-                                                                                                                                                            "valor_extraido": "5.0"
+                                                                                                                                                            "valor_extraido": "5.0",
+                                                                                                                                                            "linha": 13,
+                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "literal",
+                                                                                                                                                            "info_assembly": "LDR R0, =5.0"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "operador_final",
@@ -701,17 +971,26 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "OPERADOR_REL",
-                                                                                                                                                                    "valor_extraido": ">"
+                                                                                                                                                                    "valor_extraido": ">",
+                                                                                                                                                                    "linha": 13,
+                                                                                                                                                                    "tipo_inferido": "bool",
+                                                                                                                                                                    "tipo": "bool",
+                                                                                                                                                                    "categoria_semantica": "operador_relacional",
+                                                                                                                                                                    "info_assembly": "OP_RELACIONAL >"
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 }
-                                                                                                                                            ]
+                                                                                                                                            ],
+                                                                                                                                            "tipo_resultado": "bool",
+                                                                                                                                            "tipo": "bool",
+                                                                                                                                            "categoria_semantica": "expressao"
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                            "linha": 13
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 },
@@ -725,7 +1004,8 @@
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                    "valor_extraido": "("
+                                                                                                                                                    "valor_extraido": "(",
+                                                                                                                                                    "linha": 13
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -733,7 +1013,12 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "NUMERO",
-                                                                                                                                                            "valor_extraido": "1.0"
+                                                                                                                                                            "valor_extraido": "1.0",
+                                                                                                                                                            "linha": 13,
+                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "literal",
+                                                                                                                                                            "info_assembly": "LDR R0, =1.0"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "sufixo_numero",
@@ -741,24 +1026,36 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                                                                    "valor_extraido": "RESULTADO"
+                                                                                                                                                                    "valor_extraido": "RESULTADO",
+                                                                                                                                                                    "linha": 13,
+                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                    "categoria_semantica": "var_store",
+                                                                                                                                                                    "info_assembly": "STR R0, [RESULTADO]"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "apos_mem",
                                                                                                                                                                     "producao_acionada": "ε",
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
-                                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                                            "terminal_folha": "ε",
+                                                                                                                                                                            "linha": -1,
+                                                                                                                                                                            "tipo": "void",
+                                                                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                                                                         }
                                                                                                                                                                     ]
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
-                                                                                                                                                    ]
+                                                                                                                                                    ],
+                                                                                                                                                    "tipo": "void",
+                                                                                                                                                    "categoria_semantica": "expressao"
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                                    "valor_extraido": ")",
+                                                                                                                                                    "linha": 13
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         },
@@ -772,7 +1069,8 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                            "valor_extraido": "("
+                                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                                            "linha": 13
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -780,7 +1078,12 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "NUMERO",
-                                                                                                                                                                    "valor_extraido": "0.0"
+                                                                                                                                                                    "valor_extraido": "0.0",
+                                                                                                                                                                    "linha": 13,
+                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                    "categoria_semantica": "literal",
+                                                                                                                                                                    "info_assembly": "LDR R0, =0.0"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "sufixo_numero",
@@ -788,40 +1091,57 @@
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
                                                                                                                                                                             "terminal_folha": "MEMORIA",
-                                                                                                                                                                            "valor_extraido": "RESULTADO"
+                                                                                                                                                                            "valor_extraido": "RESULTADO",
+                                                                                                                                                                            "linha": 13,
+                                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                                            "tipo": "real",
+                                                                                                                                                                            "categoria_semantica": "var_store",
+                                                                                                                                                                            "info_assembly": "STR R0, [RESULTADO]"
                                                                                                                                                                         },
                                                                                                                                                                         {
                                                                                                                                                                             "nodo_pai": "apos_mem",
                                                                                                                                                                             "producao_acionada": "ε",
                                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                                 {
-                                                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                                                    "terminal_folha": "ε",
+                                                                                                                                                                                    "linha": -1,
+                                                                                                                                                                                    "tipo": "void",
+                                                                                                                                                                                    "categoria_semantica": "pontuacao",
+                                                                                                                                                                                    "info_assembly": "NENHUM"
                                                                                                                                                                                 }
                                                                                                                                                                             ]
                                                                                                                                                                         }
                                                                                                                                                                     ]
                                                                                                                                                                 }
-                                                                                                                                                            ]
+                                                                                                                                                            ],
+                                                                                                                                                            "tipo": "void",
+                                                                                                                                                            "categoria_semantica": "expressao"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                                            "linha": 13
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "KEYWORD_IF",
-                                                                                                                                                    "valor_extraido": "IF"
+                                                                                                                                                    "valor_extraido": "IF",
+                                                                                                                                                    "linha": 13
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 }
-                                                                                                                            ]
+                                                                                                                            ],
+                                                                                                                            "tipo": "void",
+                                                                                                                            "categoria_semantica": "controle",
+                                                                                                                            "info_assembly": "DESVIO_CONDICIONAL"
                                                                                                                         },
                                                                                                                         {
                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                            "valor_extraido": ")"
+                                                                                                                            "valor_extraido": ")",
+                                                                                                                            "linha": 13
                                                                                                                         }
                                                                                                                     ]
                                                                                                                 },
@@ -835,7 +1155,8 @@
                                                                                                                             "nodos_filhos": [
                                                                                                                                 {
                                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                                    "valor_extraido": "("
+                                                                                                                                    "valor_extraido": "(",
+                                                                                                                                    "linha": 14
                                                                                                                                 },
                                                                                                                                 {
                                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -843,22 +1164,35 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "MEMORIA",
-                                                                                                                                            "valor_extraido": "VAR"
+                                                                                                                                            "valor_extraido": "VAR",
+                                                                                                                                            "linha": 14,
+                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                            "tipo": "real",
+                                                                                                                                            "categoria_semantica": "var_load",
+                                                                                                                                            "info_assembly": "LDR R0, [VAR]"
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "nodo_pai": "sufixo_memoria",
                                                                                                                                             "producao_acionada": "ε",
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
-                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                    "terminal_folha": "ε",
+                                                                                                                                                    "linha": -1,
+                                                                                                                                                    "tipo": "void",
+                                                                                                                                                    "categoria_semantica": "pontuacao",
+                                                                                                                                                    "info_assembly": "NENHUM"
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         }
-                                                                                                                                    ]
+                                                                                                                                    ],
+                                                                                                                                    "tipo_resultado": "real",
+                                                                                                                                    "tipo": "real",
+                                                                                                                                    "categoria_semantica": "expressao"
                                                                                                                                 },
                                                                                                                                 {
                                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                    "valor_extraido": ")",
+                                                                                                                                    "linha": 14
                                                                                                                                 }
                                                                                                                             ]
                                                                                                                         },
@@ -872,7 +1206,8 @@
                                                                                                                                     "nodos_filhos": [
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                            "valor_extraido": "("
+                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                            "linha": 15
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -880,7 +1215,12 @@
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "NUMERO",
-                                                                                                                                                    "valor_extraido": "5.0"
+                                                                                                                                                    "valor_extraido": "5.0",
+                                                                                                                                                    "linha": 15,
+                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                    "tipo": "real",
+                                                                                                                                                    "categoria_semantica": "literal",
+                                                                                                                                                    "info_assembly": "LDR R0, =5.0"
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "nodo_pai": "sufixo_numero",
@@ -888,24 +1228,36 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "MEMORIA",
-                                                                                                                                                            "valor_extraido": "MEM"
+                                                                                                                                                            "valor_extraido": "MEM",
+                                                                                                                                                            "linha": 15,
+                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "var_store",
+                                                                                                                                                            "info_assembly": "STR R0, [MEM]"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "apos_mem",
                                                                                                                                                             "producao_acionada": "ε",
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
-                                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                                    "terminal_folha": "ε",
+                                                                                                                                                                    "linha": -1,
+                                                                                                                                                                    "tipo": "void",
+                                                                                                                                                                    "categoria_semantica": "pontuacao",
+                                                                                                                                                                    "info_assembly": "NENHUM"
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 }
-                                                                                                                                            ]
+                                                                                                                                            ],
+                                                                                                                                            "tipo": "void",
+                                                                                                                                            "categoria_semantica": "expressao"
                                                                                                                                         },
                                                                                                                                         {
                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                            "linha": 15
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 },
@@ -919,7 +1271,8 @@
                                                                                                                                             "nodos_filhos": [
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                    "valor_extraido": "("
+                                                                                                                                                    "valor_extraido": "(",
+                                                                                                                                                    "linha": 16
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -927,7 +1280,12 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "NUMERO",
-                                                                                                                                                            "valor_extraido": "10.0"
+                                                                                                                                                            "valor_extraido": "10.0",
+                                                                                                                                                            "linha": 16,
+                                                                                                                                                            "tipo_inferido": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "literal",
+                                                                                                                                                            "info_assembly": "LDR R0, =10.0"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "sufixo_numero",
@@ -935,24 +1293,36 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                                                                    "valor_extraido": "MEM"
+                                                                                                                                                                    "valor_extraido": "MEM",
+                                                                                                                                                                    "linha": 16,
+                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                    "categoria_semantica": "var_store",
+                                                                                                                                                                    "info_assembly": "STR R0, [MEM]"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "apos_mem",
                                                                                                                                                                     "producao_acionada": "ε",
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
-                                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                                            "terminal_folha": "ε",
+                                                                                                                                                                            "linha": -1,
+                                                                                                                                                                            "tipo": "void",
+                                                                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                                                                         }
                                                                                                                                                                     ]
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
-                                                                                                                                                    ]
+                                                                                                                                                    ],
+                                                                                                                                                    "tipo": "void",
+                                                                                                                                                    "categoria_semantica": "expressao"
                                                                                                                                                 },
                                                                                                                                                 {
                                                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                                    "valor_extraido": ")",
+                                                                                                                                                    "linha": 16
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         },
@@ -966,7 +1336,8 @@
                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                            "valor_extraido": "("
+                                                                                                                                                            "valor_extraido": "(",
+                                                                                                                                                            "linha": 17
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "nodo_pai": "conteudo_comando",
@@ -974,22 +1345,35 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "MEMORIA",
-                                                                                                                                                                    "valor_extraido": "MEM"
+                                                                                                                                                                    "valor_extraido": "MEM",
+                                                                                                                                                                    "linha": 17,
+                                                                                                                                                                    "tipo_inferido": "real",
+                                                                                                                                                                    "tipo": "real",
+                                                                                                                                                                    "categoria_semantica": "var_load",
+                                                                                                                                                                    "info_assembly": "LDR R0, [MEM]"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "sufixo_memoria",
                                                                                                                                                                     "producao_acionada": "ε",
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
-                                                                                                                                                                            "terminal_folha": "ε"
+                                                                                                                                                                            "terminal_folha": "ε",
+                                                                                                                                                                            "linha": -1,
+                                                                                                                                                                            "tipo": "void",
+                                                                                                                                                                            "categoria_semantica": "pontuacao",
+                                                                                                                                                                            "info_assembly": "NENHUM"
                                                                                                                                                                         }
                                                                                                                                                                     ]
                                                                                                                                                                 }
-                                                                                                                                                            ]
+                                                                                                                                                            ],
+                                                                                                                                                            "tipo_resultado": "real",
+                                                                                                                                                            "tipo": "real",
+                                                                                                                                                            "categoria_semantica": "expressao"
                                                                                                                                                         },
                                                                                                                                                         {
                                                                                                                                                             "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                            "valor_extraido": ")"
+                                                                                                                                                            "valor_extraido": ")",
+                                                                                                                                                            "linha": 17
                                                                                                                                                         }
                                                                                                                                                     ]
                                                                                                                                                 },
@@ -1003,7 +1387,8 @@
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "ABRE_PAREN",
-                                                                                                                                                                    "valor_extraido": "("
+                                                                                                                                                                    "valor_extraido": "(",
+                                                                                                                                                                    "linha": 18
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "nodo_pai": "conteudo_comando",
@@ -1011,13 +1396,21 @@
                                                                                                                                                                     "nodos_filhos": [
                                                                                                                                                                         {
                                                                                                                                                                             "terminal_folha": "KEYWORD_END",
-                                                                                                                                                                            "valor_extraido": "END"
+                                                                                                                                                                            "valor_extraido": "END",
+                                                                                                                                                                            "linha": 18,
+                                                                                                                                                                            "tipo": "void",
+                                                                                                                                                                            "categoria_semantica": "controle",
+                                                                                                                                                                            "info_assembly": "NOP"
                                                                                                                                                                         }
-                                                                                                                                                                    ]
+                                                                                                                                                                    ],
+                                                                                                                                                                    "tipo": "void",
+                                                                                                                                                                    "categoria_semantica": "controle",
+                                                                                                                                                                    "info_assembly": "NOP"
                                                                                                                                                                 },
                                                                                                                                                                 {
                                                                                                                                                                     "terminal_folha": "FECHA_PAREN",
-                                                                                                                                                                    "valor_extraido": ")"
+                                                                                                                                                                    "valor_extraido": ")",
+                                                                                                                                                                    "linha": 18
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         },
@@ -1026,7 +1419,8 @@
                                                                                                                                                             "producao_acionada": "ε",
                                                                                                                                                             "nodos_filhos": [
                                                                                                                                                                 {
-                                                                                                                                                                    "terminal_folha": "ε"
+                                                                                                                                                                    "terminal_folha": "ε",
+                                                                                                                                                                    "linha": -1
                                                                                                                                                                 }
                                                                                                                                                             ]
                                                                                                                                                         }
