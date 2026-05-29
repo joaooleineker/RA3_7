@@ -1,0 +1,15 @@
+(START)
+*{ teste2: programa semanticamente valido }*
+(4 2 +)
+(10.5 2.5 -)
+(6 3 /)
+(10 4 %)
+(8.0 2.0 |)
+(2 5 ^)
+((3 2 +) *{ comentario no meio da expressao }* (4 5 *) *)
+(7.5 TOTAL) *{ comentario no final da linha }*
+(TOTAL)
+((TOTAL 20.0 <) ((TOTAL 1.5 +) TOTAL) WHILE)
+((TOTAL 15.0 >) (1 STATUS) (0 STATUS) IF)
+(1 RES)
+(END)
