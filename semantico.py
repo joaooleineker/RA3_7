@@ -456,23 +456,43 @@ def salvarErrosSemanticos(erros, nome_arquivo="erros_semanticos.md"):
         print(f"Erro ao salvar relatório de erros: {e}")
 
 def prepararEntradaSemantica(nome_arquivo):
+    print(f"\n{'='*60}")
+    print("ANÁLISE LÉXICA")
+    print(f"{'='*60}\n")
+
     linhas_arquivo = []
     lerArquivo(nome_arquivo, linhas_arquivo)
-
     print("Arquivo carregado com sucesso.")
-    print("Quantidade de linhas:", len(linhas_arquivo))
+    print(f"Linhas de código: {len(linhas_arquivo)}")
 
-    # Utilizando as funções criadas no sintático
     gerarTokens(linhas_arquivo)
     tokens = lerTokens("tokens.txt")
 
-    # Valida se o programa começa com (START) e termina com (END)
-    erros = validarInicioFimPrograma(tokens)
-    if len(erros) > 0:
-        for erro in erros:
-            print(erro)
+    total_tokens = sum(len(linha) for linha in tokens)
+    erros_lexicos = [t for linha in tokens for t in linha if t.tipo in ("ERRO", "LINHA_INVALIDA")]
 
+    if erros_lexicos:
+        print(f"Tokens gerados: {total_tokens} ({len(erros_lexicos)} com erro léxico)")
+        for t in erros_lexicos:
+            print(f"  Erro léxico: token inválido '{t.valor}'")
+        print("Resultado da análise léxica: FALHOU\n")
+        print("Análise sintática não executada (erros léxicos impedem o parsing).")
         return tokens, None
+
+    print(f"Tokens gerados: {total_tokens} — nenhum erro léxico encontrado.")
+    print("Resultado da análise léxica: OK\n")
+
+    # Valida se o programa começa com (START) e termina com (END)
+    erros_estrutura = validarInicioFimPrograma(tokens)
+    if erros_estrutura:
+        for erro in erros_estrutura:
+            print(erro)
+        print("Análise sintática não executada (estrutura de programa inválida).")
+        return tokens, None
+
+    print(f"\n{'='*60}")
+    print("ANÁLISE SINTÁTICA")
+    print(f"{'='*60}\n")
 
     resultado_gramatica = construirGramatica()
     derivacao = parsear(tokens, resultado_gramatica["tabela_ll1"])
@@ -1103,8 +1123,583 @@ def construirTextoArvoreAtribuida(no, prefixo="", eh_ultimo=True, eh_raiz=True):
 
     return linhas
 
-def gerarAssembly(arvore_atribuida):
-    pass
+def gerarAssembly(arvore_atribuida, nome_arquivo="saida.s"):
+    """
+    Gera código Assembly ARMv7 (VFP) para o ambiente Cpulator-ARMv7 DE1-SoC(v16.1)
+    a partir da árvore sintática atribuída gerada pelo analisador semântico.
+    """
+
+    secao_dados = []
+    secao_texto = []
+    contador_label = [0]
+    labels_memoria = set()
+    constantes_usadas = {}
+    # Contadores separados para registradores inteiros e de ponto flutuante
+    contador_reg_int = [0]   # R5 em diante (R0-R4 reservados para uso auxiliar)
+    contador_reg_fp = [0]    # D0 em diante
+
+    def obterLabelUnico(prefixo):
+        """Gera um label único para controle de fluxo."""
+        label = f"{prefixo}_{contador_label[0]}"
+        contador_label[0] += 1
+        return label
+
+    def obterRegInt():
+        """Obtém o próximo registrador inteiro disponível (R5-R12)."""
+        reg = f"R{5 + contador_reg_int[0]}"
+        contador_reg_int[0] += 1
+        return reg
+
+    def obterRegFP():
+        """Obtém o próximo registrador VFP double disponível (D0-D14)."""
+        reg = f"D{contador_reg_fp[0]}"
+        contador_reg_fp[0] += 1
+        return reg
+
+    def garantirConstanteDouble(valor_texto):
+        """Registra uma constante double no .data e retorna o nome do label."""
+        chave = f"dbl_{valor_texto}"
+        if chave in constantes_usadas:
+            return constantes_usadas[chave]
+        nome_label = "const_" + valor_texto.replace(".", "_").replace("-", "neg")
+        constantes_usadas[chave] = nome_label
+        secao_dados.append("    .align 3")
+        secao_dados.append(f"    {nome_label}: .double {valor_texto}")
+        return nome_label
+
+    def garantirConstanteInt(valor_texto):
+        """Registra uma constante inteira no .data e retorna o nome do label."""
+        chave = f"int_{valor_texto}"
+        if chave in constantes_usadas:
+            return constantes_usadas[chave]
+        nome_label = "iconst_" + valor_texto.replace("-", "neg")
+        constantes_usadas[chave] = nome_label
+        secao_dados.append(f"    {nome_label}: .word {valor_texto}")
+        return nome_label
+
+    def garantirMemoria(nome_mem, tipo_mem):
+        """Registra uma variável de memória no .data (8 bytes para double, 4 para inteiro)."""
+        nome_label = "mem_" + nome_mem
+        if nome_label not in labels_memoria:
+            if tipo_mem == "real":
+                secao_dados.append("    .align 3")
+                secao_dados.append(f"    {nome_label}: .double 0.0")
+            else:
+                secao_dados.append(f"    .align 2")
+                secao_dados.append(f"    {nome_label}: .word 0")
+            labels_memoria.add(nome_label)
+        return nome_label
+
+    def processarComandoAssembly(no_comando):
+        """
+        Processa um nó 'comando' da árvore atribuída e gera o Assembly correspondente.
+        Retorna uma tupla (registrador, tipo) com o resultado, ou None.
+        """
+        # Reseta contadores de registradores a cada comando independente
+        # para evitar ultrapassar os limites do ARM (R0-R12) e VFP (D0-D15)
+        contador_reg_int[0] = 0
+        contador_reg_fp[0] = 0
+
+        filhos = no_comando.get("nodos_filhos", [])
+        no_conteudo = None
+        for filho in filhos:
+            if isinstance(filho, dict) and filho.get("nodo_pai") == "conteudo_comando":
+                no_conteudo = filho
+                break
+
+        if no_conteudo is None:
+            return None
+
+        tipo_cmd = detectarTipoComando(no_conteudo)
+
+        # START / END
+        if tipo_cmd == "start":
+            secao_texto.append("")
+            secao_texto.append("    @ (START) - inicio do programa")
+            return None
+
+        if tipo_cmd == "end":
+            secao_texto.append("")
+            secao_texto.append("    @ (END) - fim do programa")
+            return None
+
+        # WHILE
+        if tipo_cmd == "while":
+            processarWhileAssembly(no_conteudo)
+            return None
+
+        # IF
+        if tipo_cmd == "if":
+            processarIfAssembly(no_conteudo)
+            return None
+
+        # Comando regular: processa usando pilha RPN com informações de tipo da árvore atribuída
+        return processarRegularAssembly(no_conteudo)
+
+    def processarWhileAssembly(no_conteudo):
+        """Gera Assembly para a estrutura WHILE usando labels de controle de fluxo."""
+        label_inicio = obterLabelUnico("while")
+        label_fim = f"{label_inicio}_fim"
+
+        filhos = no_conteudo.get("nodos_filhos", [])
+        cmd_condicao = None
+        sufixo_cmd = None
+        for f in filhos:
+            if isinstance(f, dict):
+                if f.get("nodo_pai") == "comando" and cmd_condicao is None:
+                    cmd_condicao = f
+                elif f.get("nodo_pai") == "sufixo_comando":
+                    sufixo_cmd = f
+
+        cmd_corpo = None
+        if sufixo_cmd:
+            for f in sufixo_cmd.get("nodos_filhos", []):
+                if isinstance(f, dict) and f.get("nodo_pai") == "comando":
+                    cmd_corpo = f
+                    break
+
+        secao_texto.append("")
+        secao_texto.append(f"    @ WHILE - inicio do loop")
+        secao_texto.append(f"{label_inicio}:")
+
+        # Avalia a condição (deve retornar um registrador inteiro com 0 ou 1)
+        secao_texto.append(f"    @ Avalia condicao do WHILE")
+        resultado_cond = None
+        if cmd_condicao:
+            resultado_cond = processarComandoAssembly(cmd_condicao)
+
+        if resultado_cond:
+            reg_cond, tipo_cond = resultado_cond
+            # A condição é bool, representada como inteiro: 0 = falso
+            secao_texto.append(f"    CMP {reg_cond}, #0")
+            secao_texto.append(f"    BEQ {label_fim}             @ se condicao == 0 (falso), sai do loop")
+
+        # Corpo do loop
+        secao_texto.append(f"    @ Corpo do WHILE")
+        if cmd_corpo:
+            processarComandoAssembly(cmd_corpo)
+
+        secao_texto.append(f"    B {label_inicio}               @ volta ao inicio do loop")
+        secao_texto.append(f"{label_fim}:")
+
+    def processarIfAssembly(no_conteudo):
+        """Gera Assembly para a estrutura IF/ELSE usando labels de controle de fluxo."""
+        label_else = obterLabelUnico("if_else")
+        label_fim = obterLabelUnico("if_fim")
+
+        filhos = no_conteudo.get("nodos_filhos", [])
+        cmd_condicao = None
+        sufixo_cmd = None
+        for f in filhos:
+            if isinstance(f, dict):
+                if f.get("nodo_pai") == "comando" and cmd_condicao is None:
+                    cmd_condicao = f
+                elif f.get("nodo_pai") == "sufixo_comando":
+                    sufixo_cmd = f
+
+        cmd_then = None
+        apos_cmd = None
+        if sufixo_cmd:
+            for f in sufixo_cmd.get("nodos_filhos", []):
+                if isinstance(f, dict):
+                    if f.get("nodo_pai") == "comando":
+                        cmd_then = f
+                    elif f.get("nodo_pai") == "apos_cmd":
+                        apos_cmd = f
+
+        cmd_else = None
+        if apos_cmd:
+            for f in apos_cmd.get("nodos_filhos", []):
+                if isinstance(f, dict) and f.get("nodo_pai") == "comando":
+                    cmd_else = f
+
+        secao_texto.append("")
+        secao_texto.append(f"    @ IF - Avalia condicao")
+        resultado_cond = None
+        if cmd_condicao:
+            resultado_cond = processarComandoAssembly(cmd_condicao)
+
+        if resultado_cond:
+            reg_cond, tipo_cond = resultado_cond
+            secao_texto.append(f"    CMP {reg_cond}, #0")
+            secao_texto.append(f"    BEQ {label_else}            @ se falso (0), pula pro else")
+
+        # Bloco THEN
+        secao_texto.append(f"    @ IF - Bloco THEN (Verdadeiro)")
+        if cmd_then:
+            processarComandoAssembly(cmd_then)
+        secao_texto.append(f"    B {label_fim}               @ fim do then, pula o else")
+
+        # Bloco ELSE
+        secao_texto.append(f"{label_else}:")
+        secao_texto.append(f"    @ IF - Bloco ELSE (Falso)")
+        if cmd_else:
+            processarComandoAssembly(cmd_else)
+
+        secao_texto.append(f"{label_fim}:")
+
+    def processarRegularAssembly(no_conteudo):
+        """
+        Processa um comando regular (expressão RPN) gerando Assembly.
+        Usa as anotações de tipo da árvore atribuída para escolher instruções.
+
+        Cada elemento da pilha é uma tupla (registrador, tipo).
+        - tipo 'inteiro' ou 'bool': registrador ARM (Rn)
+        - tipo 'real': registrador VFP (Dn)
+
+        Retorna (registrador, tipo) do resultado ou None.
+        """
+        terminais = coletarTerminais(no_conteudo)
+        pilha = []  # pilha de tuplas (registrador, tipo)
+
+        # Comentário identificando o comando
+        pedacos_expr = []
+        for t in terminais:
+            tf = t.get("terminal_folha", "")
+            if tf not in ("ε", "ABRE_PAREN", "FECHA_PAREN"):
+                v = t.get("valor_extraido", "")
+                pedacos_expr.append(v if v else tf)
+        expr_str = " ".join(pedacos_expr)
+        secao_texto.append("")
+        secao_texto.append(f"    @ Comando RPN: ( {expr_str} )")
+
+        for terminal in terminais:
+            tipo_token = terminal.get("terminal_folha", "")
+            valor = terminal.get("valor_extraido", "")
+            tipo_anotado = terminal.get("tipo", None)
+
+            # Pula parênteses e epsilon
+            if tipo_token in ("ABRE_PAREN", "FECHA_PAREN", "ε"):
+                continue
+
+            # NUMERO: carrega constante no registrador adequado ao tipo
+            if tipo_token == "NUMERO":
+                if tipo_anotado == "inteiro":
+                    reg = obterRegInt()
+                    nome_const = garantirConstanteInt(valor)
+                    secao_texto.append(f"    LDR R4, ={nome_const}")
+                    secao_texto.append(f"    LDR {reg}, [R4]              @ carrega inteiro {valor}")
+                    pilha.append((reg, "inteiro"))
+                else:
+                    reg = obterRegFP()
+                    nome_const = garantirConstanteDouble(valor)
+                    secao_texto.append(f"    LDR R4, ={nome_const}")
+                    secao_texto.append(f"    VLDR {reg}, [R4]             @ carrega double {valor}")
+                    pilha.append((reg, "real"))
+
+            # OPERADOR aritmético
+            elif tipo_token == "OPERADOR":
+                if len(pilha) < 2:
+                    secao_texto.append(f"    @ ERRO: operandos insuficientes para '{valor}'")
+                    continue
+
+                reg_b, tipo_b = pilha.pop()
+                reg_a, tipo_a = pilha.pop()
+                tipo_resultado = tipo_anotado if tipo_anotado else inferirTipoOperacao(valor, tipo_a, tipo_b)
+
+                # Divisão inteira e resto: sempre operam com inteiros
+                if valor in ("/", "%"):
+                    # Garantir que operandos estão em registradores inteiros
+                    reg_a = converterParaInt(reg_a, tipo_a)
+                    reg_b = converterParaInt(reg_b, tipo_b)
+
+                    if valor == "/":
+                        # SDIV nao suportado no Cortex-A9: usa VFP para dividir e trunca
+                        d_div = obterRegFP()
+                        d_dvs = obterRegFP()
+                        reg_res = obterRegInt()
+                        secao_texto.append(f"    @ divisao inteira via VFP (Cortex-A9 nao suporta SDIV)")
+                        secao_texto.append(f"    VMOV S30, {reg_a}")
+                        secao_texto.append(f"    VCVT.F64.S32 {d_div}, S30         @ dividendo int -> double")
+                        secao_texto.append(f"    VMOV S30, {reg_b}")
+                        secao_texto.append(f"    VCVT.F64.S32 {d_dvs}, S30         @ divisor int -> double")
+                        secao_texto.append(f"    VDIV.F64 {d_div}, {d_div}, {d_dvs}")
+                        secao_texto.append(f"    VCVT.S32.F64 S31, {d_div}         @ trunca para inteiro")
+                        secao_texto.append(f"    VMOV {reg_res}, S31")
+                        pilha.append((reg_res, "inteiro"))
+                    else:  # %
+                        # resto: a % b = a - (a/b)*b, divisao via VFP
+                        d_div = obterRegFP()
+                        d_dvs = obterRegFP()
+                        reg_quoc = obterRegInt()
+                        reg_res = obterRegInt()
+                        secao_texto.append(f"    @ resto via VFP: {reg_a} % {reg_b}")
+                        secao_texto.append(f"    VMOV S30, {reg_a}")
+                        secao_texto.append(f"    VCVT.F64.S32 {d_div}, S30")
+                        secao_texto.append(f"    VMOV S30, {reg_b}")
+                        secao_texto.append(f"    VCVT.F64.S32 {d_dvs}, S30")
+                        secao_texto.append(f"    VDIV.F64 {d_div}, {d_div}, {d_dvs}  @ quociente real")
+                        secao_texto.append(f"    VCVT.S32.F64 S31, {d_div}           @ trunca quociente")
+                        secao_texto.append(f"    VMOV {reg_quoc}, S31")
+                        secao_texto.append(f"    MUL {reg_res}, {reg_quoc}, {reg_b}")
+                        secao_texto.append(f"    SUB {reg_res}, {reg_a}, {reg_res}   @ resto")
+                        pilha.append((reg_res, "inteiro"))
+
+                # Divisão real: sempre opera com doubles, resultado real
+                elif valor == "|":
+                    reg_a = converterParaDouble(reg_a, tipo_a)
+                    reg_b = converterParaDouble(reg_b, tipo_b)
+                    reg_res = obterRegFP()
+                    secao_texto.append(f"    VDIV.F64 {reg_res}, {reg_a}, {reg_b}    @ divisao real")
+                    pilha.append((reg_res, "real"))
+
+                # +, -, *, ^: dependem do tipo dos operandos
+                elif valor in ("+", "-", "*"):
+                    if tipo_resultado == "inteiro":
+                        reg_a = converterParaInt(reg_a, tipo_a)
+                        reg_b = converterParaInt(reg_b, tipo_b)
+                        reg_res = obterRegInt()
+                        if valor == "+":
+                            secao_texto.append(f"    ADD {reg_res}, {reg_a}, {reg_b}    @ {reg_a} + {reg_b}")
+                        elif valor == "-":
+                            secao_texto.append(f"    SUB {reg_res}, {reg_a}, {reg_b}    @ {reg_a} - {reg_b}")
+                        elif valor == "*":
+                            secao_texto.append(f"    MUL {reg_res}, {reg_a}, {reg_b}    @ {reg_a} * {reg_b}")
+                        pilha.append((reg_res, "inteiro"))
+                    else:
+                        reg_a = converterParaDouble(reg_a, tipo_a)
+                        reg_b = converterParaDouble(reg_b, tipo_b)
+                        reg_res = obterRegFP()
+                        if valor == "+":
+                            secao_texto.append(f"    VADD.F64 {reg_res}, {reg_a}, {reg_b}    @ soma real")
+                        elif valor == "-":
+                            secao_texto.append(f"    VSUB.F64 {reg_res}, {reg_a}, {reg_b}    @ subtracao real")
+                        elif valor == "*":
+                            secao_texto.append(f"    VMUL.F64 {reg_res}, {reg_a}, {reg_b}    @ multiplicacao real")
+                        pilha.append((reg_res, "real"))
+
+                elif valor == "^":
+                    # Potenciação por loop: base ^ expoente
+                    # Converte expoente para inteiro e base para double
+                    reg_exp = converterParaInt(reg_b, tipo_b)
+                    reg_base = converterParaDouble(reg_a, tipo_a)
+
+                    reg_res = obterRegFP()
+                    label_pot = obterLabelUnico("potencia")
+
+                    secao_texto.append(f"    @ potenciacao: base ^ expoente")
+                    nome_c1 = garantirConstanteDouble("1.0")
+                    secao_texto.append(f"    LDR R4, ={nome_c1}")
+                    secao_texto.append(f"    VLDR {reg_res}, [R4]         @ resultado = 1.0")
+                    secao_texto.append(f"    MOV R0, {reg_exp}            @ R0 = expoente")
+                    secao_texto.append(f"{label_pot}:")
+                    secao_texto.append(f"    CMP R0, #0")
+                    secao_texto.append(f"    BLE {label_pot}_fim")
+                    secao_texto.append(f"    VMUL.F64 {reg_res}, {reg_res}, {reg_base}")
+                    secao_texto.append(f"    SUB R0, R0, #1")
+                    secao_texto.append(f"    B {label_pot}")
+                    secao_texto.append(f"{label_pot}_fim:")
+
+                    if tipo_resultado == "inteiro":
+                        # Trunca de volta para inteiro
+                        reg_int_res = obterRegInt()
+                        secao_texto.append(f"    VCVT.S32.F64 S31, {reg_res}")
+                        secao_texto.append(f"    VMOV {reg_int_res}, S31      @ resultado inteiro")
+                        pilha.append((reg_int_res, "inteiro"))
+                    else:
+                        pilha.append((reg_res, "real"))
+
+            # OPERADOR RELACIONAL: resultado sempre bool (inteiro 0 ou 1)
+            elif tipo_token == "OPERADOR_REL":
+                if len(pilha) < 2:
+                    secao_texto.append(f"    @ ERRO: operandos insuficientes para '{valor}'")
+                    continue
+
+                reg_b, tipo_b = pilha.pop()
+                reg_a, tipo_a = pilha.pop()
+                reg_res = obterRegInt()
+
+                label_verdade = obterLabelUnico("rel_verdade")
+                label_rel_fim = obterLabelUnico("rel_fim")
+
+                secao_texto.append(f"    @ comparacao relacional '{valor}'")
+
+                # Se ambos são inteiros ou bool, compara com CMP
+                if tipo_a in ("inteiro", "bool") and tipo_b in ("inteiro", "bool"):
+                    secao_texto.append(f"    CMP {reg_a}, {reg_b}")
+                else:
+                    # Ao menos um é real: promove ambos para double e compara com VFP
+                    reg_a = converterParaDouble(reg_a, tipo_a)
+                    reg_b = converterParaDouble(reg_b, tipo_b)
+                    secao_texto.append(f"    VCMP.F64 {reg_a}, {reg_b}")
+                    secao_texto.append(f"    VMRS APSR_nzcv, FPSCR")
+
+                # Branch condicional
+                if valor == "<":
+                    secao_texto.append(f"    BLT {label_verdade}")
+                elif valor == ">":
+                    secao_texto.append(f"    BGT {label_verdade}")
+                elif valor == "==":
+                    secao_texto.append(f"    BEQ {label_verdade}")
+                elif valor == "!=":
+                    secao_texto.append(f"    BNE {label_verdade}")
+                elif valor == "<=":
+                    secao_texto.append(f"    BLE {label_verdade}")
+                elif valor == ">=":
+                    secao_texto.append(f"    BGE {label_verdade}")
+
+                # Falso: resultado = 0
+                secao_texto.append(f"    MOV {reg_res}, #0            @ false")
+                secao_texto.append(f"    B {label_rel_fim}")
+
+                # Verdadeiro: resultado = 1
+                secao_texto.append(f"{label_verdade}:")
+                secao_texto.append(f"    MOV {reg_res}, #1            @ true")
+
+                secao_texto.append(f"{label_rel_fim}:")
+                pilha.append((reg_res, "bool"))
+
+            # MEMORIA: load ou store
+            elif tipo_token == "MEMORIA":
+                cat_semantica = terminal.get("categoria_semantica", "")
+
+                if cat_semantica == "var_store" and len(pilha) > 0:
+                    # STORE: consome o valor do topo da pilha e armazena na memória
+                    reg_valor, tipo_valor = pilha.pop()
+                    nome_label = garantirMemoria(valor, tipo_valor)
+
+                    if tipo_valor == "real":
+                        reg_valor = converterParaDouble(reg_valor, tipo_valor)
+                        secao_texto.append(f"    LDR R0, ={nome_label}        @ store em {valor}")
+                        secao_texto.append(f"    VSTR {reg_valor}, [R0]")
+                    else:
+                        reg_valor = converterParaInt(reg_valor, tipo_valor)
+                        secao_texto.append(f"    LDR R0, ={nome_label}        @ store em {valor}")
+                        secao_texto.append(f"    STR {reg_valor}, [R0]")
+
+                else:
+                    # LOAD: carrega valor da memória
+                    tipo_mem = tipo_anotado if tipo_anotado else "real"
+                    nome_label = garantirMemoria(valor, tipo_mem)
+
+                    if tipo_mem == "real":
+                        reg_carregado = obterRegFP()
+                        secao_texto.append(f"    LDR R0, ={nome_label}        @ load de {valor}")
+                        secao_texto.append(f"    VLDR {reg_carregado}, [R0]")
+                        pilha.append((reg_carregado, "real"))
+                    else:
+                        reg_carregado = obterRegInt()
+                        secao_texto.append(f"    LDR R0, ={nome_label}        @ load de {valor}")
+                        secao_texto.append(f"    LDR {reg_carregado}, [R0]")
+                        pilha.append((reg_carregado, tipo_mem))
+
+            # KEYWORD_RES: acessa histórico de resultados
+            elif tipo_token == "KEYWORD_RES":
+                if len(pilha) < 1:
+                    secao_texto.append(f"    @ ERRO: falta N para RES")
+                    continue
+
+                reg_n, tipo_n = pilha.pop()
+                reg_n = converterParaInt(reg_n, tipo_n)
+                reg_res = obterRegFP()
+
+                secao_texto.append(f"    @ RES: acessa resultado anterior")
+                secao_texto.append(f"    LDR R1, =resultados")
+                secao_texto.append(f"    LDR R2, =numResultados")
+                secao_texto.append(f"    LDR R2, [R2]                @ R2 = contador total")
+                secao_texto.append(f"    SUB R2, R2, {reg_n}         @ indice = total - N")
+                secao_texto.append(f"    LSL R2, R2, #3              @ offset em bytes (double = 8)")
+                secao_texto.append(f"    ADD R1, R1, R2")
+                secao_texto.append(f"    VLDR {reg_res}, [R1]        @ carrega resultado historico")
+
+                tipo_resultado_res = tipo_anotado if tipo_anotado else "real"
+                pilha.append((reg_res, tipo_resultado_res))
+
+        # Armazena resultado no histórico (se a pilha tiver exatamente 1 valor)
+        if len(pilha) == 1:
+            reg_final, tipo_final = pilha[0]
+
+            # Converte resultado para double antes de armazenar no histórico
+            reg_double = converterParaDouble(reg_final, tipo_final)
+
+            secao_texto.append(f"    @ Armazena resultado no historico")
+            secao_texto.append(f"    LDR R0, =numResultados")
+            secao_texto.append(f"    LDR R1, [R0]                @ R1 = numResultados atual")
+            secao_texto.append(f"    LDR R2, =resultados")
+            secao_texto.append(f"    LSL R3, R1, #3              @ offset = R1 * 8")
+            secao_texto.append(f"    ADD R2, R2, R3")
+            secao_texto.append(f"    VSTR {reg_double}, [R2]     @ guarda resultado")
+            secao_texto.append(f"    ADD R1, R1, #1")
+            secao_texto.append(f"    STR R1, [R0]                @ numResultados++")
+
+            return pilha[0]
+
+        return None
+
+    def converterParaDouble(reg, tipo_atual):
+        """Converte um registrador inteiro/bool para double VFP, se necessário."""
+        if tipo_atual == "real":
+            return reg  # já é VFP double
+        # tipo_atual é 'inteiro' ou 'bool' → converter de ARM int para VFP double
+        reg_fp = obterRegFP()
+        secao_texto.append(f"    VMOV S30, {reg}              @ copia int para VFP")
+        secao_texto.append(f"    VCVT.F64.S32 {reg_fp}, S30   @ converte int para double")
+        return reg_fp
+
+    def converterParaInt(reg, tipo_atual):
+        """Converte um registrador VFP double para inteiro ARM, se necessário."""
+        if tipo_atual in ("inteiro", "bool"):
+            return reg  # já é inteiro ARM
+        # tipo_atual é 'real' → trunca de double para int
+        reg_int = obterRegInt()
+        secao_texto.append(f"    VCVT.S32.F64 S31, {reg}     @ trunca double para int")
+        secao_texto.append(f"    VMOV {reg_int}, S31           @ copia para ARM")
+        return reg_int
+
+    def percorrerArvoreAssembly(no):
+        """Percorre a árvore atribuída buscando nós 'comando'."""
+        if not isinstance(no, dict):
+            return
+
+        nome_no = no.get("nodo_pai", "")
+
+        if nome_no == "comando":
+            processarComandoAssembly(no)
+            return
+        elif nome_no == "comando_descartado":
+            secao_texto.append("")
+            secao_texto.append(f"    @ AVISO: linha ignorada. Motivo: {no.get('motivo', 'Desconhecido')}")
+            return
+
+        if "nodos_filhos" in no:
+            for filho in no["nodos_filhos"]:
+                percorrerArvoreAssembly(filho)
+
+    # ========== Execução principal da geração de Assembly ==========
+
+    # Percorre a árvore atribuída
+    percorrerArvoreAssembly(arvore_atribuida)
+
+    # Adiciona histórico de resultados ao .data
+    secao_dados.append("    .align 3")
+    secao_dados.append("    resultados: .space 800       @ espaco para 100 doubles")
+    secao_dados.append("    numResultados: .word 0")
+
+    # Monta o código final
+    codigo_final = []
+    codigo_final.append(".global _start")
+    codigo_final.append("")
+    codigo_final.append(".data")
+    codigo_final.extend(secao_dados)
+    codigo_final.append("")
+    codigo_final.append(".text")
+    codigo_final.append("_start:")
+    codigo_final.extend(secao_texto)
+    codigo_final.append("")
+    codigo_final.append("    @ Fim do programa")
+    codigo_final.append("fim:")
+    codigo_final.append("    B fim")
+
+    # Salva o arquivo .s
+    try:
+        with open(nome_arquivo, 'w', encoding='utf-8') as f:
+            for linha in codigo_final:
+                f.write(linha + "\n")
+        print(f"Assembly gerado e salvo em '{nome_arquivo}'.")
+    except Exception as e:
+        print(f"Erro ao salvar Assembly: {e}")
+
+    return codigo_final
 
 def possuiErroLexico(tokens):
     for linha_tokens in tokens:
@@ -1144,15 +1739,20 @@ def executarAnaliseSemantica(nome_arquivo):
 
     tokens, arvore_sintatica_inicial = prepararEntradaSemantica(nome_arquivo)
 
-    # Reportar erros léxicos antes da etapa semântica
     if possuiErroLexico(tokens):
-        print("Análise semântica interrompida: foram encontrados erros léxicos.")
+        print("Análise semântica não executada devido a erros anteriores.")
         return
 
-    # Reportar erros sintáticos antes da etapa semântica
     if possuiErroSintatico(arvore_sintatica_inicial):
-        print("Análise semântica interrompida: foram encontrados erros sintáticos.")
+        print("\nResultado da análise sintática: FALHOU")
+        print("Análise semântica não executada (erros sintáticos encontrados).")
         return
+
+    print("\nResultado da análise sintática: OK\n")
+
+    print(f"{'='*60}")
+    print("ANÁLISE SEMÂNTICA")
+    print(f"{'='*60}\n")
 
     decorarArvoreComLinhas(arvore_sintatica_inicial, tokens)
 
@@ -1193,9 +1793,13 @@ def executarAnaliseSemantica(nome_arquivo):
     else:
         print("Análise semântica concluída sem erros.\n")
         # Aluno 4: Gera a árvore atribuída se não houver erros
-        gerarArvoreAtribuida(arvore_sintatica_inicial, tabela_simbolos)
+        arvore_atribuida = gerarArvoreAtribuida(arvore_sintatica_inicial, tabela_simbolos)
 
-    print(f"{'='*60}")
+        # Gera código Assembly ARMv7 a partir da árvore atribuída
+        nome_assembly = nome_arquivo.replace(".txt", ".s")
+        gerarAssembly(arvore_atribuida, nome_assembly)
+
+    print(f"\n{'='*60}")
     print("ARQUIVOS DE SAÍDA GERADOS")
     print(f"{'='*60}")
     print("  - tabela_simbolos.md")
@@ -1203,8 +1807,11 @@ def executarAnaliseSemantica(nome_arquivo):
     print("  - relatorio_tipos.md")
     print("  - arvore_sintatica.md")
     print("  - arvore_sintatica.json")
-    print("  - arvore_atribuida.json")
-    print("  - arvore_atribuida.md")
+    if not todos_erros:
+        print("  - arvore_atribuida.json")
+        print("  - arvore_atribuida.md")
+        nome_assembly = nome_arquivo.replace(".txt", ".s")
+        print(f"  - {nome_assembly}")
     print(f"{'='*60}")
     print("Analisador semântico concluído.")
 
