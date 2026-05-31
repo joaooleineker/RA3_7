@@ -236,7 +236,7 @@ def executarExpressao(tokens, resultados, memoria):
 
             i += 1
 
-        elif token.tipo == "KEYWORD" and token.valor == "RES":
+        elif token.tipo == "KEYWORD_RES":
             if len(pilha) < 1:
                 print("Erro: falta o valor N para RES")
                 return None
@@ -443,7 +443,7 @@ def gerarAssembly(listaTokens, codigoAssembly):
                         pilhaRegistradores.append(regCarregado)
 
                 # RES: acessa histórico de resultados
-                elif token.tipo == "KEYWORD" and token.valor == "RES":
+                elif token.tipo == "KEYWORD_RES":
                     if len(pilhaRegistradores) < 1:
                         secaoTexto.append("    @ ERRO: falta N para RES")
                         continue

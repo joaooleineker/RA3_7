@@ -303,10 +303,13 @@ def testarParsear():
         print(f" Testando expressão: {texto}")
         print(" Log das validações LL(1) durante o parsing:")
         
-        # Executa o parser descendente preditivo
-        ast_gerada = parsear(fita_preparada, tabela_ll1)
-        
-        teve_erro_real = ast_tem_erros(ast_gerada)
+        # Executa o parser — captura LinhaDescartada quando o erro é irrecuperável
+        try:
+            ast_gerada = parsear(fita_preparada, tabela_ll1)
+        except Exception:
+            ast_gerada = None
+
+        teve_erro_real = True if ast_gerada is None else ast_tem_erros(ast_gerada)
         status_sucesso = (teve_erro_real == teste["espera_erro"])
         
         status_text = "OK" if status_sucesso else "FALHOU"

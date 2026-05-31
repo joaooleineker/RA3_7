@@ -22,8 +22,8 @@ def testarAnalisadorLexico():
         ("Adicao simples", "(3.0 2.0 +)", True),
         ("Subtracao simples", "(5.0 1.0 -)", True),
         ("Multiplicacao simples", "(3.0 4.0 *)", True),
-        ("Divisao real", "(10.0 2.0 /)", True),
-        ("Divisao inteira", "(10 3 //)", True),
+        ("Divisao real", "(10.0 2.0 |)", True),
+        ("Divisao inteira", "(10 3 /)", True),
         ("Resto", "(10 3 %)", True),
         ("Potenciacao", "(2.0 8 ^)", True),
 
@@ -144,11 +144,11 @@ def testarGerarAssembly():
     # Testa com todas as expressoes obrigatorias de uma vez
     entradas = [
         "(3.14 2.0 +)",
-        "((1.5 2.0 *) (3.0 4.0 *) /)",
+        "((1.5 2.0 *) (3.0 4.0 *) |)",
         "(5.0 MEM)",
         "(MEM)",
         "(2 RES)",
-        "(10 3 //)",
+        "(10 3 /)",
         "(10 3 %)",
         "(2.0 8 ^)",
     ]
@@ -203,3 +203,7 @@ def iniciarTestes():
     testarExecutarExpressao()
     testarResolverAninhamento()
     testarGerarAssembly()
+
+
+if __name__ == "__main__":
+    iniciarTestes()
